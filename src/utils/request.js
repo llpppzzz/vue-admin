@@ -2,6 +2,7 @@ import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
+// import { API_REQUEST_CONTENT_TYPE } from '@/utils/constants'
 
 // create an axios instance
 const service = axios.create({
@@ -9,6 +10,10 @@ const service = axios.create({
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
+
+// 设置 post、put 默认 Content-Type
+// service.defaults.headers.post['Content-Type'] = API_REQUEST_CONTENT_TYPE
+// service.defaults.headers.put['Content-Type'] = API_REQUEST_CONTENT_TYPE
 
 // request interceptor
 service.interceptors.request.use(
