@@ -1,5 +1,5 @@
 <template>
-	<div class="view-order-management">
+	<div class="view-loan-management">
     <div class="searching-box">
       <input-search @confirm="onSearch" />
     </div>
@@ -58,12 +58,18 @@
 
 <script>
 export default {
-  name: 'OrderManagement'
+  name: 'LoanManagement'
 }
 </script>
 
 <style lang="scss">
-.view-order-management {
+.view-loan-management {
   background: #fff;
+  .searching-box {
+    padding: 0 0 16px 0;
+    .el-input {
+      width: 200px;
+    }
+  }
 }
 </style>
