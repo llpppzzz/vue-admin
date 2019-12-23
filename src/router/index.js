@@ -78,13 +78,19 @@ export const constantRoutes = [
       name: 'agentManagement',
       component: () => import('@/views/userManagement/agentManagement'),
       meta: { title: '代理商' },
-      children: [{
-        path: 'agentDetail',
-        name: 'agentDetail',
-        component: () => import('@/views/userManagement/agentDetail/agentDetail'),
-        meta: { title: '用户详情' },
-        hidden: true
-      }]
+      children: []
+    }, {
+      path: 'agentDetail',
+      name: 'agentDetail',
+      component: () => import('@/views/userManagement/agentDetail/agentDetail'),
+      meta: { title: '用户详情' },
+      hidden: true
+    }, {
+      path: 'agentLeave',
+      name: 'agentLeave',
+      component: () => import('@/views/userManagement/agentDetail/agentLeave'),
+      meta: { title: '离职详情' },
+      hidden: true
     }]
   },
 

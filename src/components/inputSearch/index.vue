@@ -1,5 +1,5 @@
 <template>
-  <div class="gf-input-search" @keyup.enter="handleClick">
+  <div class="l-input-search" @keyup.enter="handleClick">
     <el-input class="input-search" :placeholder="placeholder" :value="value" size="small" v-on="inputListeners">
       <i class="el-icon-search" slot="suffix" @click="handleClick"></i>
     </el-input>
@@ -42,7 +42,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .gf-input-search {
+  .l-input-search {
     display: inline-block;
     .el-icon-search {
       cursor: pointer;
