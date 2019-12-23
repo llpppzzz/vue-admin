@@ -75,7 +75,7 @@ export default {
   data() {
     return {
       list: null,
-      listLoading: true,
+      // listLoading: true,
       searchingInfo: ''
     }
   },
@@ -90,7 +90,7 @@ export default {
     }
   },
   created() {
-    this.fetchData()
+    // this.fetchData()
   },
   methods: {
     fetchData() {
@@ -112,7 +112,7 @@ export default {
 <style lang="scss" scoped>
   .user-management-container {
     .searching-box {
-      padding: 16px 0 16px 16px;
+      padding: 0 0 16px 0;
       .el-input {
         width: 200px;
       }

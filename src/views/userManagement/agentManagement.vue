@@ -95,7 +95,7 @@ export default {
   data() {
     return {
       list: null,
-      listLoading: true,
+      // listLoading: true,
       activeName: '1',
       searchingInfo: ''
     }
@@ -106,7 +106,7 @@ export default {
     ])
   },
   created() {
-    this.fetchData()
+    // this.fetchData()
   },
   methods: {
     fetchData() {
@@ -130,19 +130,15 @@ export default {
 <style lang="scss" scoped>
   .agent-management-container {
     .searching-box {
-      padding: 16px 0 0 16px;
       position: relative;
       .l-input-search {
         position: absolute;
         bottom: 19px;
-        right: 16px;
+        right: 0;
       }
       .el-input {
         width: 200px;
       }
-    }
-    .table-box {
-      padding: 0 16px;
     }
   }
 </style>

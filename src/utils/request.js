@@ -2,7 +2,6 @@ import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
-// import { API_REQUEST_CONTENT_TYPE } from '@/utils/constants'
 
 // create an axios instance
 const service = axios.create({
@@ -11,20 +10,15 @@ const service = axios.create({
   timeout: 5000 // request timeout
 })
 
-// 设置 post、put 默认 Content-Type
-// service.defaults.headers.post['Content-Type'] = API_REQUEST_CONTENT_TYPE
-// service.defaults.headers.put['Content-Type'] = API_REQUEST_CONTENT_TYPE
-
 // request interceptor
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-
     if (store.getters.token) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
-      config.headers['X-Token'] = getToken()
+      config.headers['Authorization'] = getToken()
     }
     return config
   },
@@ -40,7 +34,7 @@ service.interceptors.response.use(
   /**
    * If you want to get http information such as headers or status
    * Please return  response => response
-  */
+   */
 
   /**
    * Determine the request status by custom code
@@ -49,9 +43,14 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-
+    var code = res.code
+    if (res['status'] != null) {
+      code = res['status']
+    }
+    console.log('code=' + code)
+    console.log(res)
     // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== 20000) {
+    if (code !== 20000 && code !== 200) {
       Message({
         message: res.message || 'Error',
         type: 'error',
@@ -59,7 +58,7 @@ service.interceptors.response.use(
       })
 
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+      if (code === 50008 || code === 50012 || code === 50014) {
         // to re-login
         MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
           confirmButtonText: 'Re-Login',
@@ -77,9 +76,18 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log('err' + error) // for debug
+    console.log('出现错误.')
+    console.log(error.response)
+    if (error.response.status === 403 ||
+      error.response.status === 401 ||
+      error.response.data.status == 401 ||
+      error.response.data.status == 403) {
+      console.log('重定向到登录界面.')
+      store.dispatch('user/logout')
+      window.location.reload()
+    }
     Message({
-      message: error.message,
+      message: error.response.data.msg,
       type: 'error',
       duration: 5 * 1000
     })
