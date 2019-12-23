@@ -1,5 +1,8 @@
 <template>
   <div class="user-management-container">
+    <div class="searching-box">
+      <input-search @confirm="onSearch"/>
+    </div>
     <el-table
       v-loading="listLoading"
       :data="list"
@@ -7,36 +10,46 @@
       border
       fit
       highlight-current-row
+      stripe
     >
-      <el-table-column align="center" label="ID" width="95">
+      <el-table-column label="姓名" align="center">
         <template slot-scope="scope">
           {{ scope.$index }}
         </template>
       </el-table-column>
-      <el-table-column label="Title">
+      <el-table-column label="身份证" align="center">
         <template slot-scope="scope">
           {{ scope.row.title }}
         </template>
       </el-table-column>
-      <el-table-column label="Author" width="110" align="center">
+      <el-table-column label="电话" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.author }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Pageviews" width="110" align="center">
+      <el-table-column label="工作单位" align="center">
         <template slot-scope="scope">
           {{ scope.row.pageviews }}
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="Status" width="110" align="center">
+      <el-table-column class-name="status-col" label="积分" align="center">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="Display_time" width="200">
+      <el-table-column align="center" prop="created_at" label="代理人" width="200">
         <template slot-scope="scope">
-          <i class="el-icon-time" />
           <span>{{ scope.row.display_time }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" prop="created_at" label="用户创建时间" width="200">
+        <template slot-scope="scope">
+          <span>{{ scope.row.display_time }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" prop="created_at" label="操作" width="200">
+        <template slot-scope="scope">
+          <el-button type="text" @click="gotoDetails(scope.row)">查看详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -59,16 +72,17 @@ export default {
       return statusMap[status]
     }
   },
+  data() {
+    return {
+      list: null,
+      listLoading: true,
+      searchingInfo: ''
+    }
+  },
   computed: {
     ...mapGetters([
       'name'
     ])
-  },
-  data() {
-    return {
-      list: null,
-      listLoading: true
-    }
   },
   created() {
     this.fetchData()
@@ -80,19 +94,23 @@ export default {
         this.list = response.data.items
         this.listLoading = false
       })
+    },
+    onSearch() {},
+    gotoDetails(row) {
+      console.log(row)
+      this.$router.push({ name: 'userDetail' })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .dashboard {
-    &-container {
-      margin: 30px;
-    }
-    &-text {
-      font-size: 30px;
-      line-height: 46px;
+  .user-management-container {
+    .searching-box {
+      padding: 16px 0 16px 16px;
+      .el-input {
+        width: 200px;
+      }
     }
   }
 </style>
