@@ -1,13 +1,13 @@
 <template>
-	$END$
+  <div class="tab-income-info">IncomeInfo</div>
 </template>
 
 <script>
-	export default {
-		name: "incomeInfo"
-	}
+export default {
+  name: 'IncomeInfo'
+}
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

@@ -1,13 +1,13 @@
 <template>
-	$END$
+  <div class="tab-apply-list">ApplyList</div>
 </template>
 
 <script>
-	export default {
-		name: "applyList"
-	}
+export default {
+  name: 'ApplyList'
+}
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

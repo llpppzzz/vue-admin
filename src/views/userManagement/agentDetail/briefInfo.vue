@@ -1,13 +1,13 @@
 <template>
-	$END$
+<div class="tab-brief-info">briefInfo</div>
 </template>
 
 <script>
-	export default {
-		name: "briefInfo"
-	}
+export default {
+  name: 'BriefInfo'
+}
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

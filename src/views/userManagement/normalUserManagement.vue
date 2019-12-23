@@ -1,7 +1,7 @@
 <template>
   <div class="user-management-container">
     <div class="searching-box">
-      <input-search @confirm="onSearch"/>
+      <input-search @confirm="onSearch" />
     </div>
     <el-table
       v-loading="listLoading"
@@ -37,19 +37,19 @@
           <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="代理人" width="200">
+      <el-table-column align="center" prop="created_at" label="代理人">
         <template slot-scope="scope">
           <span>{{ scope.row.display_time }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="用户创建时间" width="200">
+      <el-table-column align="center" prop="created_at" label="用户创建时间">
         <template slot-scope="scope">
           <span>{{ scope.row.display_time }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="操作" width="200">
+      <el-table-column align="center" prop="created_at" label="操作">
         <template slot-scope="scope">
-          <el-button type="text" @click="gotoDetails(scope.row)">查看详情</el-button>
+          <el-button type="text" @click="openDetails(scope.row)">查看详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -61,7 +61,7 @@ import { mapGetters } from 'vuex'
 import { getList } from '@/api/table'
 
 export default {
-  name: 'UserManagement',
+  name: 'NormalUserManagement',
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -84,6 +84,11 @@ export default {
       'name'
     ])
   },
+  watch: {
+    '$route'(to, from) {
+      console.log(to, from)
+    }
+  },
   created() {
     this.fetchData()
   },
@@ -96,9 +101,9 @@ export default {
       })
     },
     onSearch() {},
-    gotoDetails(row) {
-      console.log(row)
+    openDetails(row) {
       this.$router.push({ name: 'userDetail' })
+      console.log(row)
     }
   }
 }

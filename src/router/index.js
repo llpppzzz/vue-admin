@@ -51,26 +51,40 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '导流平台后台', icon: 'dashboard' }
     }]
   },
 
   {
     path: '/userManagement',
     component: Layout,
-    redirect: '/userManagement',
+    redirect: '/userManagement/normalUserManagement',
     name: 'userManagement',
     meta: { title: '用户管理', icon: 'user' },
     children: [{
-      path: 'userManagement',
-      name: 'userManagement',
-      component: () => import('@/views/userManagement/userList'),
-      meta: { title: '普通用户', icon: 'user' }
+      path: 'normalUserManagement',
+      name: 'normalUserManagement',
+      component: () => import('@/views/userManagement/normalUserManagement'),
+      meta: { title: '普通用户' },
+      children: [{
+        path: 'userDetail',
+        name: 'userDetail',
+        component: () => import('@/views/userManagement/userDetail'),
+        meta: { title: '用户详情' },
+        hidden: true
+      }]
     }, {
-      path: 'userManagement',
-      name: 'userManagement',
-      component: () => import('@/views/userManagement/userList'),
-      meta: { title: '代理商', icon: 'user' }
+      path: 'agentManagement',
+      name: 'agentManagement',
+      component: () => import('@/views/userManagement/agentManagement'),
+      meta: { title: '代理商' },
+      children: [{
+        path: 'agentDetail',
+        name: 'agentDetail',
+        component: () => import('@/views/userManagement/agentDetail/agentDetail'),
+        meta: { title: '用户详情' },
+        hidden: true
+      }]
     }]
   },
 
