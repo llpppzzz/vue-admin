@@ -197,6 +197,11 @@ export const constantRoutes = [
       name: 'menu',
       component: () => import('@/views/system/menu'),
       meta: { title: '菜单' }
+    }, {
+      path: 'userSetting',
+      name: 'userSetting',
+      component: () => import('@/views/system/userSetting'),
+      meta: { title: '个人设置' }
     }]
   },
 

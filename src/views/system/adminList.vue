@@ -1,15 +1,16 @@
 <template>
   <div style="padding:0 15px">
-    <div class="Interactive" style="margin:10px;display:flex">
+    <div class="Interactive" style="display:flex">
       <el-button type="success" size="mini" @click="dialogNewUserFormVisible = true">新增用户</el-button>
-      <el-input
-        v-model="sendList.search"
-        style="width:220px;"
-        placeholder="请输入内容"
-      >
+      <!--<el-input-->
+        <!--v-model="sendList.search"-->
+        <!--style="width:220px;"-->
+        <!--placeholder="请输入内容"-->
+      <!--&gt;-->
 
-        <el-button slot="append" icon="el-icon-search" @click="search" />
-      </el-input>
+        <!--<el-button slot="append" icon="el-icon-search" @click="search" />-->
+      <!--</el-input>-->
+      <l-input-search v-model="sendList.search" @confirm="search"></l-input-search>
     </div>
     <el-table
       :data="list"
@@ -336,6 +337,7 @@ export default {
 
 <style lang="scss" scoped>
 .Interactive{
-    justify-content: space-between;
+  margin-bottom: 16px;
+  justify-content: space-between;
 }
 </style>
