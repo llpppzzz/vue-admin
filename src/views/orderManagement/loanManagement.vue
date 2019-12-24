@@ -1,7 +1,8 @@
 <template>
 	<div class="view-loan-management">
     <div class="searching-box">
-      <input-search @confirm="onSearch" />
+      <l-date-picker v-model="dateRange" @change="reloadList"></l-date-picker>
+      <l-input-search @confirm="onSearch" />
     </div>
     <el-table
       v-loading="listLoading"
@@ -34,7 +35,7 @@
       </el-table-column>
       <el-table-column class-name="status-col" label="积分" align="center">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
+          <el-tag :type="scope.row.status">{{ scope.row.status }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="代理人">
@@ -58,7 +59,23 @@
 
 <script>
 export default {
-  name: 'LoanManagement'
+  name: 'LoanManagement',
+  data() {
+    return {
+      dateRange: [],
+      listLoading: false,
+      list: [{}]
+    }
+  },
+  methods: {
+    reloadList(val) {
+      console.log(this.dateRange)
+    },
+    onSearch() {},
+    openDetails() {
+      this.$router.push({ name: 'orderDetail', query: { type: 'loan' }})
+    }
+  }
 }
 </script>
 
@@ -67,6 +84,8 @@ export default {
   background: #fff;
   .searching-box {
     padding: 0 0 16px 0;
+    display: flex;
+    justify-content: space-between;
     .el-input {
       width: 200px;
     }

@@ -1,7 +1,7 @@
 <template>
   <div class="user-management-container">
     <div class="searching-box">
-      <input-search @confirm="onSearch" />
+      <l-input-search @confirm="onSearch" />
     </div>
     <el-table
       v-loading="listLoading"

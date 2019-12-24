@@ -109,6 +109,12 @@ export const constantRoutes = [
       name: 'loanManagement',
       component: () => import('@/views/orderManagement/loanManagement'),
       meta: { title: '申贷管理' }
+    }, {
+      path: 'orderDetail',
+      name: 'orderDetail',
+      component: () => import('@/views/orderManagement/orderDetail'),
+      meta: { title: '订单详情' },
+      hidden: true
     }]
 
   },

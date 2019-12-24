@@ -7,7 +7,7 @@
         <el-tab-pane label="二级代理" name="3"></el-tab-pane>
         <el-tab-pane label="机构" name="4"></el-tab-pane>
       </el-tabs>
-      <input-search @confirm="onSearch" />
+      <l-input-search @confirm="onSearch" />
     </div>
     <div class="table-box">
       <el-table
