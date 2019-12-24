@@ -64,15 +64,35 @@
             <span>{{ scope.row.display_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="created_at" label="操作" width="200">
+        <el-table-column align="center" prop="created_at" label="操作" width="230">
           <template slot-scope="scope">
-            <el-button type="text" @click="openDetails(scope.row)">详情</el-button>
-            <el-button type="text" @click="openLeave(scope.row)">离职</el-button>
-            <el-button type="text" @click="openLeave(scope.row)">晋升</el-button>
+            <el-button size="mini" type="primary" plain @click="openDetails(scope.row)">详情</el-button>
+            <el-button size="mini" type="danger" plain @click="openLeave(scope.row)">离职</el-button>
+            <el-button size="mini" type="success" plain @click="dialogVisible = true">晋升</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
+    <el-dialog
+      title="晋升"
+      :visible.sync="dialogVisible"
+      width="30%"
+      center
+      :before-close="handleClose">
+      <span>代理身份</span>
+      <el-select v-model="agentSelected" placeholder="请选择">
+        <el-option
+          v-for="item in agentOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -95,7 +115,19 @@ export default {
   data() {
     return {
       list: [{}],
-      // listLoading: true,
+      dialogVisible: false,
+      agentSelected: '',
+      agentOptions: [{
+        label: '区域代理',
+        value: 1
+      }, {
+        label: '一级代理',
+        value: 2
+      }, {
+        label: '二级代理',
+        value: 3
+      }],
+      listLoading: false,
       activeName: '1',
       searchingInfo: ''
     }
