@@ -13,12 +13,12 @@
       highlight-current-row
       stripe
     >
-      <el-table-column label="姓名" align="center">
+      <el-table-column label="订单号" align="center">
         <template slot-scope="scope">
           {{ scope.$index }}
         </template>
       </el-table-column>
-      <el-table-column label="身份证" align="center">
+      <el-table-column label="申请人" align="center">
         <template slot-scope="scope">
           {{ scope.row.title }}
         </template>
@@ -33,24 +33,39 @@
           {{ scope.row.pageviews }}
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="积分" align="center">
+      <el-table-column label="身份证号" align="center">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status">{{ scope.row.status }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="代理人">
+      <el-table-column label="费率" align="center">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.status">{{ scope.row.status }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="放款金额" align="center">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.status">{{ scope.row.status }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="年限期数" align="center">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.status">{{ scope.row.status }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" prop="created_at" label="订单状态">
         <template slot-scope="scope">
           <span>{{ scope.row.display_time }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="用户创建时间">
+      <el-table-column align="center" prop="created_at" label="订单备注">
         <template slot-scope="scope">
           <span>{{ scope.row.display_time }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="操作">
         <template slot-scope="scope">
-          <el-button type="text" @click="openDetails(scope.row)">查看详情</el-button>
+          <el-button type="text" @click="openDetails(scope.row)">订单详情</el-button>
         </template>
       </el-table-column>
     </el-table>
