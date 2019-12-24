@@ -120,6 +120,62 @@ export const constantRoutes = [
   },
 
   {
+    path: '/productManagement',
+    component: Layout,
+    redirect: '/dashboard',
+    meta: { title: '产品管理', icon: 'tree' },
+    children: [{
+      path: 'creditCardManagement',
+      name: 'creditCardManagement',
+      component: () => import('@/views/productManagement/creditCardManagement'),
+      meta: { title: '信用卡产品管理' }
+    }, {
+      path: 'creditProductManagement',
+      name: 'creditProductManagement',
+      component: () => import('@/views/productManagement/creditProductManagement'),
+      meta: { title: '信贷产品管理' }
+    }, {
+      path: 'cardDetail',
+      name: 'cardDetail',
+      component: () => import('@/views/productManagement/cardDetail'),
+      meta: { title: '信用卡产品详情' },
+      hidden: true
+    }, {
+      path: 'productDetail',
+      name: 'productDetail',
+      component: () => import('@/views/productManagement/productDetail'),
+      meta: { title: '信贷产品详情' },
+      hidden: true
+    }]
+  },
+
+  {
+    path: '/approvalManagement',
+    component: Layout,
+    redirect: '/dashboard',
+    meta: { title: '审批管理', icon: 'skill' },
+    children: [{
+      path: 'approvalManagement',
+      name: 'approvalManagement',
+      component: () => import('@/views/approvalManagement/approvalManagement'),
+      meta: { title: '审批列表' }
+    }]
+  },
+
+  {
+    path: '/financialManagement',
+    component: Layout,
+    redirect: '/dashboard',
+    meta: { title: '财务管理', icon: 'money' },
+    children: [{
+      path: 'financialManagement',
+      name: 'financialManagement',
+      component: () => import('@/views/financialManagement/financialManagement'),
+      meta: { title: '流水列表' }
+    }]
+  },
+
+  {
     path: '/system',
     component: Layout,
     redirect: '/dashboard',
