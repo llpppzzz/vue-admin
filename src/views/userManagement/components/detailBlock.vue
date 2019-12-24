@@ -1,7 +1,11 @@
 <template>
 	<div class="detail-block">
     <div class="block-title">
-      <span class="block-title-span">{{ title }}</span>
+      <div class="block-title-box">
+        <span class="block-title-span">{{ title }}</span>
+        <slot name="pullLeft"></slot>
+      </div>
+      <slot name="pullRight"></slot>
     </div>
     <slot></slot>
   </div>
@@ -28,18 +32,19 @@ export default {
     height: 40px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     border-bottom: 1px solid #E4E7ED;
     margin-bottom: 16px;
   }
   .block-title-span {
     position: relative;
-    text-indent: 10px;
+    padding-left: 10px;
   }
   .block-title-span::before {
     content: '';
     display: block;
     position: absolute;
-    top: 0;
+    top: 1px;
     left: 0;
     height: 20px;
     width: 6px;

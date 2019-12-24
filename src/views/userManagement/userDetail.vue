@@ -29,7 +29,7 @@
         <el-col :span="3"><div class="grid-content row-title">代理人：</div></el-col>
         <el-col :span="6"><div class="grid-content bg-purple">213123123123123123</div></el-col>
         <el-col :span="6"><div class="grid-content bg-purple">
-          <el-button type="primary" size="mini" @click="gotoDetails(scope.row)">修改</el-button>
+          <el-button type="primary" size="mini" plain @click="dialogVisible = true">修改</el-button>
         </div></el-col>
         <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
       </el-row>
@@ -160,15 +160,23 @@
         </el-table-column>
       </el-table>
     </detail-block>
+    <bind-agent-dialog :visible.sync="dialogVisible"/>
   </div>
 </template>
 
 <script>
 import DetailBlock from './components/detailBlock'
+import BindAgentDialog from './components/bindAgentDialog'
 export default {
   name: 'UserDetail',
   components: {
-    DetailBlock
+    DetailBlock,
+    BindAgentDialog
+  },
+  data() {
+    return {
+      dialogVisible: false
+    }
   }
 }
 </script>

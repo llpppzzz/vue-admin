@@ -21,6 +21,7 @@
       </el-row>
     </div>
     <detail-block title="客户信息">
+      <el-button slot="pullRight" size="small" type="primary" plain @click="dialogVisible = true">一键绑定</el-button>
       <el-table
         :data="[]"
         border
@@ -64,6 +65,7 @@
       </el-table>
     </detail-block>
     <detail-block title="下级信息">
+      <el-button slot="pullRight" size="small" type="primary" plain @click="dialogVisible = true">一键绑定</el-button>
       <el-table
         :data="[]"
         border
@@ -115,15 +117,23 @@
       <el-button type="primary" plain @click="confirm">确认离职</el-button>
       <el-button type="info" plain @click="goBack">返回</el-button>
     </div>
+    <bind-agent-dialog :visible.sync="dialogVisible"/>
   </div>
 </template>
 
 <script>
 import DetailBlock from '../components/detailBlock'
+import BindAgentDialog from '../components/bindAgentDialog'
 export default {
   name: 'AgentLeave',
   components: {
-    DetailBlock
+    DetailBlock,
+    BindAgentDialog
+  },
+  data() {
+    return {
+      dialogVisible: false
+    }
   },
   methods: {
     confirm() {},

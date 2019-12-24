@@ -66,13 +66,7 @@ export const constantRoutes = [
       name: 'normalUserManagement',
       component: () => import('@/views/userManagement/normalUserManagement'),
       meta: { title: '普通用户' },
-      children: [{
-        path: 'userDetail',
-        name: 'userDetail',
-        component: () => import('@/views/userManagement/userDetail'),
-        meta: { title: '用户详情' },
-        hidden: true
-      }]
+      children: []
     }, {
       path: 'agentManagement',
       name: 'agentManagement',
@@ -80,10 +74,16 @@ export const constantRoutes = [
       meta: { title: '代理商' },
       children: []
     }, {
+      path: 'userDetail',
+      name: 'userDetail',
+      component: () => import('@/views/userManagement/userDetail'),
+      meta: { title: '用户详情' },
+      hidden: true
+    }, {
       path: 'agentDetail',
       name: 'agentDetail',
       component: () => import('@/views/userManagement/agentDetail/agentDetail'),
-      meta: { title: '用户详情' },
+      meta: { title: '代理商详情' },
       hidden: true
     }, {
       path: 'agentLeave',
@@ -154,6 +154,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/dashboard',
     meta: { title: '审批管理', icon: 'skill' },
+    alwaysShow: true,
     children: [{
       path: 'approvalManagement',
       name: 'approvalManagement',
@@ -167,6 +168,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/dashboard',
     meta: { title: '财务管理', icon: 'money' },
+    alwaysShow: true,
     children: [{
       path: 'financialManagement',
       name: 'financialManagement',

@@ -58,24 +58,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getList } from '@/api/table'
 
 export default {
   name: 'NormalUserManagement',
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    }
-  },
   data() {
     return {
-      list: null,
-      // listLoading: true,
+      list: [{}],
+      listLoading: false,
       searchingInfo: ''
     }
   },
@@ -85,21 +74,10 @@ export default {
     ])
   },
   watch: {
-    '$route'(to, from) {
-      console.log(to, from)
-    }
   },
   created() {
-    // this.fetchData()
   },
   methods: {
-    fetchData() {
-      this.listLoading = true
-      getList().then(response => {
-        this.list = response.data.items
-        this.listLoading = false
-      })
-    },
     onSearch() {},
     openDetails(row) {
       this.$router.push({ name: 'userDetail' })
