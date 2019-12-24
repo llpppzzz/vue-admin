@@ -35,6 +35,101 @@
           </el-option>
         </el-select>
       </el-form-item>
+      <el-form-item label="促销活动">
+        <vue-ueditor-wrap v-model="msg" :config="myConfig"></vue-ueditor-wrap>
+      </el-form-item>
+      <el-form-item label="产品介绍">
+        <vue-ueditor-wrap v-model="msg1" :config="myConfig"></vue-ueditor-wrap>
+      </el-form-item>
+      <el-form-item label="结算规则">
+        <vue-ueditor-wrap v-model="msg2" :config="myConfig"></vue-ueditor-wrap>
+      </el-form-item>
+      <el-form-item label="佣金设置">
+        <el-row :gutter="20">
+          <el-col :span="6"><div class="grid-content">
+            <span class="sub-title">佣金金额</span>
+            <el-input v-model="commission" size="small" type="number">
+              <span class="suffix-text" slot="suffix">元</span>
+            </el-input>
+          </div></el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="6"><div class="grid-content">
+            <span class="sub-title">一级代理分佣</span>
+            <el-input v-model="commission" size="small" type="number">
+              <span class="suffix-text" slot="suffix">%</span>
+            </el-input>
+          </div></el-col>
+          <el-col :span="6"><div class="grid-content">
+            <span class="sub-title">二级代理分佣</span>
+            <el-input v-model="commission" size="small" type="number">
+              <span class="suffix-text" slot="suffix">%</span>
+            </el-input>
+          </div></el-col>
+          <el-col :span="6"><div class="grid-content">
+            <span class="sub-title">区域代理分佣</span>
+            <el-input v-model="commission" size="small" type="number">
+              <span class="suffix-text" slot="suffix">%</span>
+            </el-input>
+          </div></el-col>
+          <el-col :span="6"><div class="grid-content">
+            <span class="sub-title">机构分佣</span>
+            <el-input v-model="commission" size="small" type="number">
+              <span class="suffix-text" slot="suffix">%</span>
+            </el-input>
+          </div></el-col>
+        </el-row>
+      </el-form-item>
+      <el-form-item label="积分设置">
+        <el-row :gutter="20">
+          <el-col :span="8"><div class="grid-content">
+            <span class="sub-title">积分有效期</span>
+            <el-input v-model="commission" size="small" type="number">
+              <span class="suffix-text" slot="suffix">天</span>
+            </el-input>
+          </div></el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="8"><div class="grid-content">
+            <span class="sub-title">一级代理积分</span>
+            <el-input v-model="commission" size="small" type="number">
+              <span class="suffix-text" slot="suffix">分</span>
+            </el-input>
+          </div></el-col>
+          <el-col :span="8"><div class="grid-content">
+            <span class="sub-title">二级代理积分</span>
+            <el-input v-model="commission" size="small" type="number">
+              <span class="suffix-text" slot="suffix">分</span>
+            </el-input>
+          </div></el-col>
+          <el-col :span="8"><div class="grid-content">
+            <span class="sub-title">区域代理积分</span>
+            <el-input v-model="commission" size="small" type="number">
+              <span class="suffix-text" slot="suffix">分</span>
+            </el-input>
+          </div></el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="8"><div class="grid-content">
+            <span class="sub-title">一级用户积分</span>
+            <el-input v-model="commission" size="small" type="number">
+              <span class="suffix-text" slot="suffix">分</span>
+            </el-input>
+          </div></el-col>
+          <el-col :span="8"><div class="grid-content">
+            <span class="sub-title">二级用户积分</span>
+            <el-input v-model="commission" size="small" type="number">
+              <span class="suffix-text" slot="suffix">分</span>
+            </el-input>
+          </div></el-col>
+          <el-col :span="8"><div class="grid-content">
+            <span class="sub-title">机构积分</span>
+            <el-input v-model="commission" size="small" type="number">
+              <span class="suffix-text" slot="suffix">分</span>
+            </el-input>
+          </div></el-col>
+        </el-row>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" plain @click="onSubmit">确认</el-button>
         <el-button type="info" plain @click="onCancel">取消</el-button>
@@ -44,14 +139,20 @@
 </template>
 
 <script>
+import { UEDITOR_CONFIG } from '@/utils/constants'
 export default {
   name: 'CardDetail',
   data() {
     return {
+      myConfig: UEDITOR_CONFIG,
       fileList: [{
         name: 'food.jpeg',
         url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
       }],
+      msg: '<h2><img src="http://img.baidu.com/hi/jx2/j_0003.gif"/>Vue + UEditor + v-model双向绑定</h2>',
+      msg1: '<h2><img src="http://img.baidu.com/hi/jx2/j_0003.gif"/>Vue + UEditor + v-model双向绑定</h2>',
+      msg2: '<h2><img src="http://img.baidu.com/hi/jx2/j_0003.gif"/>Vue + UEditor + v-model双向绑定</h2>',
+      commission: 0,
       options: [{
         value: 'HTML',
         label: 'HTML'
@@ -68,6 +169,8 @@ export default {
         tags: []
       }
     }
+  },
+  created() {
   },
   methods: {
     onSubmit() {
@@ -89,7 +192,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .view-card-detail{
+  .sub-title {
+    color: #606266
+  }
+  .suffix-text {
+    padding: 0 10px;
+  }
 }
 </style>

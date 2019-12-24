@@ -78,6 +78,15 @@
           </el-input>
         </el-col>
       </el-form-item>
+      <el-form-item label="产品亮点">
+        <vue-ueditor-wrap v-model="msg" :config="myConfig"></vue-ueditor-wrap>
+      </el-form-item>
+      <el-form-item label="申请要求">
+        <vue-ueditor-wrap v-model="msg1" :config="myConfig"></vue-ueditor-wrap>
+      </el-form-item>
+      <el-form-item label="产品介绍">
+        <vue-ueditor-wrap v-model="msg2" :config="myConfig"></vue-ueditor-wrap>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" plain @click="onSubmit">确认</el-button>
         <el-button type="info" plain @click="onCancel">取消</el-button>
@@ -87,14 +96,19 @@
 </template>
 
 <script>
+import { UEDITOR_CONFIG } from '@/utils/constants'
 export default {
   name: 'ProductDetail',
   data() {
     return {
+      myConfig: UEDITOR_CONFIG,
       fileList: [{
         name: 'food.jpeg',
         url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
       }],
+      msg: '',
+      msg1: '',
+      msg2: '',
       options: [{
         value: 'HTML',
         label: 'HTML'
