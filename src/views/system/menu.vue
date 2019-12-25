@@ -48,48 +48,30 @@
         </div>
         <el-collapse-item :title="item.name">
           <div class="menuItem">
-            <el-tag
-              v-for="(tag,index) in item.funs"
-              v-if="tag.funType===2"
-              :key="index"
-              closable
-              type="success"
-              @close="deleteMenu(tag)"
-            >
-              {{ tag.name }}
-              <i class="el-icon-edit cou" @click="editMenuItem(tag)" />
-            </el-tag>
+            <template v-for="(tag,index) in item.funs">
+              <el-tag
+                v-if="tag.funType===2"
+                :key="index"
+                closable
+                type="success"
+                @close="deleteMenu(tag)"
+              >
+                {{ tag.name }}
+                <i class="el-icon-edit cou" @click="editMenuItem(tag)" />
+              </el-tag>
+            </template>
           </div>
-          <el-collapse v-for="(item1,index1) in item.funs" v-if="item1.funType!==2" :key="index1" style="position:relative">
-            <div class="ico" style="top:12px;right:40px">
-              <i class="el-icon-plus cou" @click="newMenu(item1)" />
-              <i class="el-icon-edit cou" @click="editMenuItem(item1)" />
-              <i class="el-icon-close cou" @click="deleteMenu(item1)" />
-            </div>
-            <el-collapse-item :title="item1.name" style="padding:0 15px">
-              <div class="menuItem">
-                <el-tag
-                  v-for="tag in item1.funs"
-                  v-if="tag.funType===2"
-                  :key="tag.funId"
-                  closable
-                  type="success"
-                  @close="deleteMenu(tag)"
-                >
-                  {{ tag.name }}
-                  <i class="el-icon-edit cou" @click="editMenuItem(tag)" />
-                </el-tag>
+          <template v-for="(item1,index1) in item.funs">
+            <el-collapse v-if="item1.funType!==2" :key="index1" style="position:relative">
+              <div class="ico" style="top:12px;right:40px">
+                <i class="el-icon-plus cou" @click="newMenu(item1)" />
+                <i class="el-icon-edit cou" @click="editMenuItem(item1)" />
+                <i class="el-icon-close cou" @click="deleteMenu(item1)" />
               </div>
-              <el-collapse v-for="(item2,index2) in item1.funs" v-if="item2.funType!==2" :key="index2" style="position:relative">
-                <div class="ico" style="top:12px;right:40px">
-                  <i class="el-icon-plus cou" @click="newMenu(item2)" />
-                  <i class="el-icon-edit cou" @click="editMenuItem(item2)" />
-                  <i class="el-icon-close cou" @click="deleteMenu(item2)" />
-                </div>
-                <el-collapse-item :title="item2.name" style="padding:0 15px">
-                  <div class="menuItem">
+              <el-collapse-item :title="item1.name" style="padding:0 15px">
+                <div class="menuItem">
+                  <template v-for="tag in item1.funs">
                     <el-tag
-                      v-for="tag in item2.funs"
                       v-if="tag.funType===2"
                       :key="tag.funId"
                       closable
@@ -99,12 +81,36 @@
                       {{ tag.name }}
                       <i class="el-icon-edit cou" @click="editMenuItem(tag)" />
                     </el-tag>
-                  </div>
-                </el-collapse-item>
-              </el-collapse>
-            </el-collapse-item>
-
-          </el-collapse>
+                  </template>
+                </div>
+                <template v-for="(item2,index2) in item1.funs">
+                  <el-collapse v-if="item2.funType!==2" :key="index2" style="position:relative">
+                    <div class="ico" style="top:12px;right:40px">
+                      <i class="el-icon-plus cou" @click="newMenu(item2)" />
+                      <i class="el-icon-edit cou" @click="editMenuItem(item2)" />
+                      <i class="el-icon-close cou" @click="deleteMenu(item2)" />
+                    </div>
+                    <el-collapse-item :title="item2.name" style="padding:0 15px">
+                      <div class="menuItem">
+                        <template v-for="tag in item2.funs">
+                          <el-tag
+                            v-if="tag.funType===2"
+                            :key="tag.funId"
+                            closable
+                            type="success"
+                            @close="deleteMenu(tag)"
+                          >
+                            {{ tag.name }}
+                            <i class="el-icon-edit cou" @click="editMenuItem(tag)" />
+                          </el-tag>
+                        </template>
+                      </div>
+                    </el-collapse-item>
+                  </el-collapse>
+                </template>
+              </el-collapse-item>
+            </el-collapse>
+          </template>
         </el-collapse-item>
       </el-collapse>
     </div>
@@ -162,7 +168,7 @@ export default {
     editMenu(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          let menuForm = { ...this.menuForm }
+          const menuForm = { ...this.menuForm }
           menuForm.funType = menuForm.funType ? 2 : 1
           menuForm.show = menuForm.show ? 1 : 2
           delete menuForm.funs

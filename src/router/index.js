@@ -38,6 +38,12 @@ export const constantRoutes = [
   },
 
   {
+    path: '/auth-redirect',
+    component: () => import('@/views/login/auth-redirect'),
+    hidden: true
+  },
+
+  {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
@@ -53,160 +59,312 @@ export const constantRoutes = [
       component: () => import('@/views/dashboard/index'),
       meta: { title: '导流平台后台', icon: 'dashboard' }
     }]
-  },
+  }
 
-  {
-    path: '/userManagement',
-    component: Layout,
-    redirect: '/userManagement/normalUserManagement',
-    name: 'userManagement',
-    meta: { title: '用户管理', icon: 'user' },
-    children: [{
-      path: 'normalUserManagement',
-      name: 'normalUserManagement',
-      component: () => import('@/views/userManagement/normalUserManagement'),
-      meta: { title: '普通用户' },
-      children: []
-    }, {
-      path: 'agentManagement',
-      name: 'agentManagement',
-      component: () => import('@/views/userManagement/agentManagement'),
-      meta: { title: '代理商' },
-      children: []
-    }, {
-      path: 'userDetail',
-      name: 'userDetail',
-      component: () => import('@/views/userManagement/userDetail'),
-      meta: { title: '用户详情' },
-      hidden: true
-    }, {
-      path: 'agentDetail',
-      name: 'agentDetail',
-      component: () => import('@/views/userManagement/agentDetail/agentDetail'),
-      meta: { title: '代理商详情' },
-      hidden: true
-    }, {
-      path: 'agentLeave',
-      name: 'agentLeave',
-      component: () => import('@/views/userManagement/agentDetail/agentLeave'),
-      meta: { title: '离职详情' },
-      hidden: true
-    }]
-  },
-
-  {
-    path: '/orderManagement',
-    component: Layout,
-    redirect: '/dashboard',
-    meta: { title: '订单管理', icon: 'list' },
-    children: [{
-      path: 'cardManagement',
-      name: 'cardManagement',
-      component: () => import('@/views/orderManagement/cardManagement'),
-      meta: { title: '申卡管理' }
-    }, {
-      path: 'loanManagement',
-      name: 'loanManagement',
-      component: () => import('@/views/orderManagement/loanManagement'),
-      meta: { title: '申贷管理' }
-    }, {
-      path: 'orderDetail',
-      name: 'orderDetail',
-      component: () => import('@/views/orderManagement/orderDetail'),
-      meta: { title: '订单详情' },
-      hidden: true
-    }]
-
-  },
-
-  {
-    path: '/productManagement',
-    component: Layout,
-    redirect: '/dashboard',
-    meta: { title: '产品管理', icon: 'tree' },
-    children: [{
-      path: 'creditCardManagement',
-      name: 'creditCardManagement',
-      component: () => import('@/views/productManagement/creditCardManagement'),
-      meta: { title: '信用卡产品管理' }
-    }, {
-      path: 'creditProductManagement',
-      name: 'creditProductManagement',
-      component: () => import('@/views/productManagement/creditProductManagement'),
-      meta: { title: '信贷产品管理' }
-    }, {
-      path: 'cardDetail',
-      name: 'cardDetail',
-      component: () => import('@/views/productManagement/cardDetail'),
-      meta: { title: '信用卡产品详情' },
-      hidden: true
-    }, {
-      path: 'productDetail',
-      name: 'productDetail',
-      component: () => import('@/views/productManagement/productDetail'),
-      meta: { title: '信贷产品详情' },
-      hidden: true
-    }]
-  },
-
-  {
-    path: '/approvalManagement',
-    component: Layout,
-    redirect: '/dashboard',
-    meta: { title: '审批管理', icon: 'skill' },
-    alwaysShow: true,
-    children: [{
-      path: 'approvalManagement',
-      name: 'approvalManagement',
-      component: () => import('@/views/approvalManagement/approvalManagement'),
-      meta: { title: '审批列表' }
-    }]
-  },
-
-  {
-    path: '/financialManagement',
-    component: Layout,
-    redirect: '/dashboard',
-    meta: { title: '财务管理', icon: 'money' },
-    alwaysShow: true,
-    children: [{
-      path: 'financialManagement',
-      name: 'financialManagement',
-      component: () => import('@/views/financialManagement/financialManagement'),
-      meta: { title: '流水列表' }
-    }]
-  },
-
-  {
-    path: '/system',
-    component: Layout,
-    redirect: '/dashboard',
-    meta: { title: '系统管理', icon: 'setting' },
-    children: [{
-      path: 'adminList',
-      name: 'adminList',
-      component: () => import('@/views/system/adminList'),
-      meta: { title: '管理员' }
-    }, {
-      path: 'role',
-      name: 'role',
-      component: () => import('@/views/system/role'),
-      meta: { title: '角色管理' }
-    }, {
-      path: 'menu',
-      name: 'menu',
-      component: () => import('@/views/system/menu'),
-      meta: { title: '菜单' }
-    }, {
-      path: 'userSetting',
-      name: 'userSetting',
-      component: () => import('@/views/system/userSetting'),
-      meta: { title: '个人设置' }
-    }]
-  },
+  // {
+  //   path: '/userManagement',
+  //   component: Layout,
+  //   redirect: '/userManagement/normalUserManagement',
+  //   name: 'userManagement',
+  //   meta: { title: '用户管理', icon: 'user' },
+  //   children: [{
+  //     path: 'normalUserManagement',
+  //     name: 'normalUserManagement',
+  //     component: () => import('@/views/userManagement/normalUserManagement'),
+  //     meta: { title: '普通用户' },
+  //     children: []
+  //   }, {
+  //     path: 'agentManagement',
+  //     name: 'agentManagement',
+  //     component: () => import('@/views/userManagement/agentManagement'),
+  //     meta: { title: '代理商' },
+  //     children: []
+  //   }, {
+  //     path: 'userDetail',
+  //     name: 'userDetail',
+  //     component: () => import('@/views/userManagement/userDetail'),
+  //     meta: { title: '用户详情' },
+  //     hidden: true
+  //   }, {
+  //     path: 'agentDetail',
+  //     name: 'agentDetail',
+  //     component: () => import('@/views/userManagement/agentDetail/agentDetail'),
+  //     meta: { title: '代理商详情' },
+  //     hidden: true
+  //   }, {
+  //     path: 'agentLeave',
+  //     name: 'agentLeave',
+  //     component: () => import('@/views/userManagement/agentDetail/agentLeave'),
+  //     meta: { title: '离职详情' },
+  //     hidden: true
+  //   }]
+  // },
+  //
+  // {
+  //   path: '/orderManagement',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   meta: { title: '订单管理', icon: 'list' },
+  //   children: [{
+  //     path: 'cardManagement',
+  //     name: 'cardManagement',
+  //     component: () => import('@/views/orderManagement/cardManagement'),
+  //     meta: { title: '申卡管理' }
+  //   }, {
+  //     path: 'loanManagement',
+  //     name: 'loanManagement',
+  //     component: () => import('@/views/orderManagement/loanManagement'),
+  //     meta: { title: '申贷管理' }
+  //   }, {
+  //     path: 'orderDetail',
+  //     name: 'orderDetail',
+  //     component: () => import('@/views/orderManagement/orderDetail'),
+  //     meta: { title: '订单详情' },
+  //     hidden: true
+  //   }]
+  //
+  // },
+  //
+  // {
+  //   path: '/productManagement',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   meta: { title: '产品管理', icon: 'tree' },
+  //   children: [{
+  //     path: 'creditCardManagement',
+  //     name: 'creditCardManagement',
+  //     component: () => import('@/views/productManagement/creditCardManagement'),
+  //     meta: { title: '信用卡产品管理' }
+  //   }, {
+  //     path: 'creditProductManagement',
+  //     name: 'creditProductManagement',
+  //     component: () => import('@/views/productManagement/creditProductManagement'),
+  //     meta: { title: '信贷产品管理' }
+  //   }, {
+  //     path: 'cardDetail',
+  //     name: 'cardDetail',
+  //     component: () => import('@/views/productManagement/cardDetail'),
+  //     meta: { title: '信用卡产品详情' },
+  //     hidden: true
+  //   }, {
+  //     path: 'productDetail',
+  //     name: 'productDetail',
+  //     component: () => import('@/views/productManagement/productDetail'),
+  //     meta: { title: '信贷产品详情' },
+  //     hidden: true
+  //   }]
+  // },
+  //
+  // {
+  //   path: '/approvalManagement',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   meta: { title: '审批管理', icon: 'skill' },
+  //   alwaysShow: true,
+  //   children: [{
+  //     path: 'approvalManagement',
+  //     name: 'approvalManagement',
+  //     component: () => import('@/views/approvalManagement/approvalManagement'),
+  //     meta: { title: '审批列表' }
+  //   }]
+  // },
+  //
+  // {
+  //   path: '/financialManagement',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   meta: { title: '财务管理', icon: 'money' },
+  //   alwaysShow: true,
+  //   children: [{
+  //     path: 'financialManagement',
+  //     name: 'financialManagement',
+  //     component: () => import('@/views/financialManagement/financialManagement'),
+  //     meta: { title: '流水列表' }
+  //   }]
+  // },
+  //
+  // {
+  //   path: '/system',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   meta: { title: '系统管理', icon: 'setting' },
+  //   children: [{
+  //     path: 'adminList',
+  //     name: 'adminList',
+  //     component: () => import('@/views/system/adminList'),
+  //     meta: { title: '管理员' }
+  //   }, {
+  //     path: 'role',
+  //     name: 'role',
+  //     component: () => import('@/views/system/role'),
+  //     meta: { title: '角色管理' }
+  //   }, {
+  //     path: 'menu',
+  //     name: 'menu',
+  //     component: () => import('@/views/system/menu'),
+  //     meta: { title: '菜单' }
+  //   }, {
+  //     path: 'userSetting',
+  //     name: 'userSetting',
+  //     component: () => import('@/views/system/userSetting'),
+  //     meta: { title: '个人设置' }
+  //   }]
+  // },
 
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
+]
+
+export const asyncRoutes = [
+  // {
+  //   path: '/userManagement',
+  //   component: Layout,
+  //   redirect: '/userManagement/normalUserManagement',
+  //   name: 'userManagement',
+  //   meta: { title: '用户管理', icon: 'user' },
+  //   children: [{
+  //     path: 'normalUserManagement',
+  //     name: 'normalUserManagement',
+  //     component: () => import('@/views/userManagement/normalUserManagement'),
+  //     meta: { title: '普通用户' },
+  //     children: []
+  //   }, {
+  //     path: 'agentManagement',
+  //     name: 'agentManagement',
+  //     component: () => import('@/views/userManagement/agentManagement'),
+  //     meta: { title: '代理商' },
+  //     children: []
+  //   }, {
+  //     path: 'userDetail',
+  //     name: 'userDetail',
+  //     component: () => import('@/views/userManagement/userDetail'),
+  //     meta: { title: '用户详情' },
+  //     hidden: true
+  //   }, {
+  //     path: 'agentDetail',
+  //     name: 'agentDetail',
+  //     component: () => import('@/views/userManagement/agentDetail/agentDetail'),
+  //     meta: { title: '代理商详情' },
+  //     hidden: true
+  //   }, {
+  //     path: 'agentLeave',
+  //     name: 'agentLeave',
+  //     component: () => import('@/views/userManagement/agentDetail/agentLeave'),
+  //     meta: { title: '离职详情' },
+  //     hidden: true
+  //   }]
+  // },
+  //
+  // {
+  //   path: '/orderManagement',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   meta: { title: '订单管理', icon: 'list' },
+  //   children: [{
+  //     path: 'cardManagement',
+  //     name: 'cardManagement',
+  //     component: () => import('@/views/orderManagement/cardManagement'),
+  //     meta: { title: '申卡管理' }
+  //   }, {
+  //     path: 'loanManagement',
+  //     name: 'loanManagement',
+  //     component: () => import('@/views/orderManagement/loanManagement'),
+  //     meta: { title: '申贷管理' }
+  //   }, {
+  //     path: 'orderDetail',
+  //     name: 'orderDetail',
+  //     component: () => import('@/views/orderManagement/orderDetail'),
+  //     meta: { title: '订单详情' },
+  //     hidden: true
+  //   }]
+  //
+  // },
+  //
+  // {
+  //   path: '/productManagement',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   meta: { title: '产品管理', icon: 'tree' },
+  //   children: [{
+  //     path: 'creditCardManagement',
+  //     name: 'creditCardManagement',
+  //     component: () => import('@/views/productManagement/creditCardManagement'),
+  //     meta: { title: '信用卡产品管理' }
+  //   }, {
+  //     path: 'creditProductManagement',
+  //     name: 'creditProductManagement',
+  //     component: () => import('@/views/productManagement/creditProductManagement'),
+  //     meta: { title: '信贷产品管理' }
+  //   }, {
+  //     path: 'cardDetail',
+  //     name: 'cardDetail',
+  //     component: () => import('@/views/productManagement/cardDetail'),
+  //     meta: { title: '信用卡产品详情' },
+  //     hidden: true
+  //   }, {
+  //     path: 'productDetail',
+  //     name: 'productDetail',
+  //     component: () => import('@/views/productManagement/productDetail'),
+  //     meta: { title: '信贷产品详情' },
+  //     hidden: true
+  //   }]
+  // },
+  //
+  // {
+  //   path: '/approvalManagement',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   meta: { title: '审批管理', icon: 'skill' },
+  //   alwaysShow: true,
+  //   children: [{
+  //     path: 'approvalManagement',
+  //     name: 'approvalManagement',
+  //     component: () => import('@/views/approvalManagement/approvalManagement'),
+  //     meta: { title: '审批列表' }
+  //   }]
+  // },
+  //
+  // {
+  //   path: '/financialManagement',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   meta: { title: '财务管理', icon: 'money' },
+  //   alwaysShow: true,
+  //   children: [{
+  //     path: 'financialManagement',
+  //     name: 'financialManagement',
+  //     component: () => import('@/views/financialManagement/financialManagement'),
+  //     meta: { title: '流水列表' }
+  //   }]
+  // },
+  //
+  // {
+  //   path: '/system',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   meta: { title: '系统管理', icon: 'setting' },
+  //   children: [{
+  //     path: 'adminList',
+  //     name: 'adminList',
+  //     component: () => import('@/views/system/adminList'),
+  //     meta: { title: '管理员' }
+  //   }, {
+  //     path: 'role',
+  //     name: 'role',
+  //     component: () => import('@/views/system/role'),
+  //     meta: { title: '角色管理' }
+  //   }, {
+  //     path: 'menu',
+  //     name: 'menu',
+  //     component: () => import('@/views/system/menu'),
+  //     meta: { title: '菜单' }
+  //   }, {
+  //     path: 'userSetting',
+  //     name: 'userSetting',
+  //     component: () => import('@/views/system/userSetting'),
+  //     meta: { title: '个人设置' }
+  //   }]
+  // }
 ]
 
 const createRouter = () => new Router({

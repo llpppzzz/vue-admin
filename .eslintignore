@@ -1,4 +1,5 @@
 build/*.js
 src/assets
+src/store/modules/permission.js
 public
 dist
