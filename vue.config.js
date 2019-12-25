@@ -37,7 +37,7 @@ module.exports = {
       errors: true
     },
     proxy: {
-      '/DeepTechSpaceApi': {
+      [process.env.VUE_APP_BASE_API]: {
         target: process.env.VUE_APP_PROXY_API,
         changeOrigin: true
       }
