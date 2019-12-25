@@ -1,7 +1,8 @@
-import { asyncRoutes, constantRoutes } from '@/router'
+import { constantRoutes } from '@/router'
 import { getRouter } from '@/api/router'
 import Layout from '@/layout'
 
+let asyncRoutes = []
 /**
  * Use meta.role to determine if the current user has permission
  * @param roles
@@ -42,7 +43,7 @@ export function generaMenu(routes, data) {
     if (item.children) {
       generaMenu(menu.children, item.children)
     }
-    console.log(menu, 'menu')
+    // console.log(menu, 'menu')
     if (menu.children.length > 0) {
       menu.children.forEach(e => {
         if (e.children.length === 0) {
@@ -82,6 +83,11 @@ const mutations = {
   SET_ROUTES: (state, routes) => {
     state.addRoutes = routes
     state.routes = constantRoutes.concat(routes)
+  },
+  CLEAR_ROUTES: (state, routes) => {
+    asyncRoutes = []
+    state.addRoutes = []
+    state.routes = []
   }
 }
 
@@ -99,7 +105,6 @@ const actions = {
           })
         } else {
           data = response.data
-          console.log(data)
           Object.assign(loadMenuData, data)
           generaMenu(asyncRoutes, loadMenuData)
           let accessedRoutes
@@ -109,7 +114,6 @@ const actions = {
           } else {
             accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
           }
-
           commit('SET_ROUTES', accessedRoutes)
           console.log(accessedRoutes)
           resolve(accessedRoutes)
