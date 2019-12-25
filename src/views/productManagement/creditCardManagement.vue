@@ -70,7 +70,7 @@ export default {
     onSearch() {},
     openDetails(row) {
       const action = row ? 'edit' : 'new'
-      this.$router.push({ name: 'cardDetail', query: { type: action }})
+      this.$router.push({ path: '/productManagement/cardDetail', query: { type: action }})
     }
   }
 }

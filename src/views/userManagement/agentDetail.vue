@@ -14,11 +14,11 @@
 </template>
 
 <script>
-import BriefInfo from './briefInfo'
-import ApplyList from './applyList'
-import IncomeInfo from './incomeInfo'
-import UserList from './userList'
-import AgentList from './agentList'
+import BriefInfo from './agentDetail/briefInfo'
+import ApplyList from './agentDetail/applyList'
+import IncomeInfo from './agentDetail/incomeInfo'
+import UserList from './agentDetail/userList'
+import AgentList from './agentDetail/agentList'
 export default {
   name: 'AgentDetail',
   components: {

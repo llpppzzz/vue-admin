@@ -77,8 +77,7 @@
       title="晋升"
       :visible.sync="dialogVisible"
       width="30%"
-      center
-      :before-close="handleClose">
+      center>
       <span>代理身份</span>
       <el-select v-model="agentSelected" placeholder="请选择">
         <el-option
@@ -150,10 +149,10 @@ export default {
     },
     onSearch() {},
     openDetails(row) {
-      this.$router.push({ name: 'agentDetail' })
+      this.$router.push({ path: '/userManagement/agentDetail' })
     },
     openLeave(row) {
-      this.$router.push({ name: 'agentLeave' })
+      this.$router.push({ path: '/userManagement/agentLeave' })
     }
   }
 }

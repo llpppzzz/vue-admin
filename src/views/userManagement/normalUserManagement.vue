@@ -80,7 +80,7 @@ export default {
   methods: {
     onSearch() {},
     openDetails(row) {
-      this.$router.push({ name: 'userDetail' })
+      this.$router.push({ path: '/userManagement/userDetail' })
       console.log(row)
     }
   }

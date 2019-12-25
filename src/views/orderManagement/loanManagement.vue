@@ -88,7 +88,7 @@ export default {
     },
     onSearch() {},
     openDetails() {
-      this.$router.push({ name: 'orderDetail', query: { type: 'loan' }})
+      this.$router.push({ path: '/orderManagement/orderDetail', query: { type: 'loan' }})
     }
   }
 }

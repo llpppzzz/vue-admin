@@ -122,8 +122,8 @@
 </template>
 
 <script>
-import DetailBlock from '../components/detailBlock'
-import BindAgentDialog from '../components/bindAgentDialog'
+import DetailBlock from './components/detailBlock'
+import BindAgentDialog from './components/bindAgentDialog'
 export default {
   name: 'AgentLeave',
   components: {

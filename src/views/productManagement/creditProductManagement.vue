@@ -85,7 +85,7 @@ export default {
     onSearch() {},
     openDetails(row) {
       const action = row ? 'edit' : 'new'
-      this.$router.push({ name: 'productDetail', query: { type: action }})
+      this.$router.push({ path: '/productManagement/productDetail', query: { type: action }})
     }
   }
 }

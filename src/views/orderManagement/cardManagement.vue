@@ -78,7 +78,7 @@ export default {
     },
     onSearch() {},
     openDetails() {
-      this.$router.push({ name: 'orderDetail', query: { type: 'card' }})
+      this.$router.push({ path: '/orderManagement/orderDetail', query: { type: 'card' }})
     }
   }
 }
