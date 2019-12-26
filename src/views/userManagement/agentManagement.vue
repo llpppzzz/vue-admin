@@ -1,10 +1,10 @@
 <template>
   <div class="agent-management-container">
     <div class="searching-box">
-      <el-tabs v-model="activeName">
-        <el-tab-pane label="区域代理" name="1"></el-tab-pane>
-        <el-tab-pane label="一级代理" name="2"></el-tab-pane>
-        <el-tab-pane label="二级代理" name="3"></el-tab-pane>
+      <el-tabs v-model="activeName" @change="getAgents">
+        <el-tab-pane label="区域代理" name="3"></el-tab-pane>
+        <el-tab-pane label="一级代理" name="1"></el-tab-pane>
+        <el-tab-pane label="二级代理" name="2"></el-tab-pane>
         <el-tab-pane label="机构" name="4"></el-tab-pane>
       </el-tabs>
       <l-input-search @confirm="onSearch" />
@@ -97,7 +97,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getList } from '@/api/table'
+import { getAgents } from '@/api/userManagement'
 
 export default {
   name: 'AgentManagement',
@@ -118,16 +118,16 @@ export default {
       agentSelected: '',
       agentOptions: [{
         label: '区域代理',
-        value: 1
+        value: 3
       }, {
         label: '一级代理',
-        value: 2
+        value: 1
       }, {
         label: '二级代理',
-        value: 3
+        value: 2
       }],
       listLoading: false,
-      activeName: '1',
+      activeName: '3',
       searchingInfo: ''
     }
   },
@@ -137,15 +137,21 @@ export default {
     ])
   },
   created() {
-    // this.fetchData()
+    this.getAgents()
   },
   methods: {
-    fetchData() {
-      this.listLoading = true
-      getList().then(response => {
-        this.list = response.data.items
-        this.listLoading = false
-      })
+    async getAgents() {
+      try {
+        const params = {
+          page: 1,
+          pageSize: 10,
+          type: this.activeName,
+          status: 10
+        }
+        const res = await getAgents(params)
+      } catch (e) {
+        console.log(e)
+      }
     },
     onSearch() {},
     openDetails(row) {
