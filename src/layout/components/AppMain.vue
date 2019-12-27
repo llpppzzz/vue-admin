@@ -38,4 +38,19 @@ export default {
     padding-right: 15px;
   }
 }
+.null-handler {
+  display: inline-block;
+  position: relative;
+  width: 24px;
+  height: 2px;
+  vertical-align: middle !important;
+  font-size: 0;
+  &::after {
+    content: "";
+    width: 24px;
+    border-bottom: 2px solid #E1E1E1;
+    position: absolute;
+    left: 0;
+  }
+}
 </style>

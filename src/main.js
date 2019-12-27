@@ -15,6 +15,8 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 import initComponents from './components'
+import initDirectives from './directives'
+import initFilters from './filters'
 
 /**
  * If you don't want to use mock-server
@@ -37,6 +39,8 @@ Vue.use(ElementUI)
 Vue.config.productionTip = false
 
 initComponents() // 注册组件
+initDirectives() // 注册自定义指令
+initFilters() // 注册过滤器
 
 new Vue({
   el: '#app',

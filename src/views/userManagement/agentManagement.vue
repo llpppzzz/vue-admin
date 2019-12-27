@@ -21,47 +21,47 @@
       >
         <el-table-column label="姓名" align="center">
           <template slot-scope="scope">
-            {{ scope.$index }}
+            <span v-null="scope.row.name">{{ scope.row.name }}</span>
           </template>
         </el-table-column>
         <el-table-column label="身份证" align="center">
           <template slot-scope="scope">
-            {{ scope.row.title }}
+            <span v-null="scope.row.name">{{ scope.row.name }}</span>
           </template>
         </el-table-column>
         <el-table-column label="电话" align="center">
           <template slot-scope="scope">
-            <span>{{ scope.row.author }}</span>
+            <span v-null="scope.row.name">{{ scope.row.name }}</span>
           </template>
         </el-table-column>
         <el-table-column label="工作单位" align="center">
           <template slot-scope="scope">
-            {{ scope.row.pageviews }}
+            <span v-null="scope.row.name">{{ scope.row.name }}</span>
           </template>
         </el-table-column>
         <el-table-column label="佣金" align="center">
           <template slot-scope="scope">
-            {{ scope.row.pageviews }}
+            <span v-null="scope.row.name">{{ scope.row.name }}</span>
           </template>
         </el-table-column>
-        <el-table-column class-name="status-col" label="积分" align="center">
+        <el-table-column label="积分" align="center">
           <template slot-scope="scope">
-            <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
+            <span v-null="scope.row.name">{{ scope.row.name }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="created_at" label="代理身份">
+        <el-table-column align="center" label="代理身份">
           <template slot-scope="scope">
-            <span>{{ scope.row.display_time }}</span>
+            <span v-null="scope.row.name">{{ scope.row.name }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="created_at" label="上级名称">
+        <el-table-column align="center" label="上级名称">
           <template slot-scope="scope">
-            <span>{{ scope.row.display_time }}</span>
+            <span v-null="scope.row.name">{{ scope.row.name }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="created_at" label="用户创建时间">
+        <el-table-column align="center" prop="createdAt" label="用户创建时间">
           <template slot-scope="scope">
-            <span>{{ scope.row.display_time }}</span>
+            <span v-null="scope.row.createdAt">{{ scope.row.createdAt }}</span>
           </template>
         </el-table-column>
         <el-table-column align="center" prop="created_at" label="操作" width="230">
@@ -135,8 +135,7 @@ export default {
         value: 2
       }],
       listLoading: true,
-      activeName: '3',
-      searchingInfo: ''
+      activeName: '3'
     }
   },
   computed: {

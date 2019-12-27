@@ -5,7 +5,7 @@
     width="50%"
     center>
     <div class="agent-leave-dialog">
-      <l-input-search @confirm="onSearch" />
+      <l-input-search v-model="searchText" @confirm="onSearch" />
       <el-table
         v-loading="listLoading"
         :data="list"
@@ -15,27 +15,33 @@
         highlight-current-row
         stripe
       >
+        <el-table-column label="操作" align="center">
+          <template slot-scope="scope">
+            <el-radio v-model="radioValue" :label="scope.row.id" @change="radioChange(scope.row)"></el-radio>
+          </template>
+        </el-table-column>
         <el-table-column label="姓名" align="center">
           <template slot-scope="scope">
-            {{ scope.$index }}
+            <span v-null="scope.row.name">{{ scope.row.name }}</span>
           </template>
         </el-table-column>
         <el-table-column label="代理身份" align="center">
           <template slot-scope="scope">
-            {{ scope.row.title }}
+            <span v-null="scope.row.name">{{ scope.row.name }}</span>
           </template>
         </el-table-column>
         <el-table-column label="上级名称" align="center">
           <template slot-scope="scope">
-            <span>{{ scope.row.author }}</span>
+            <span v-null="scope.row.name">{{ scope.row.name }}</span>
           </template>
         </el-table-column>
         <el-table-column label="创建时间" align="center">
           <template slot-scope="scope">
-            <span>{{ scope.row.author }}</span>
+            <span v-null="scope.row.createdAt">{{ scope.row.createdAt }}</span>
           </template>
         </el-table-column>
       </el-table>
+      <l-pagination :api="api" :params="params" @list="getListData"></l-pagination>
     </div>
     <span slot="footer" class="dialog-footer">
     <el-button plain @click="isShow = false">取 消</el-button>
@@ -45,6 +51,8 @@
 </template>
 
 <script>
+import { getAgents } from '@/api/userManagement'
+
 export default {
   name: 'BindAgentDialog',
   props: {
@@ -61,7 +69,15 @@ export default {
     return {
       isShow: false,
       listLoading: false,
-      list: [{}]
+      radioValue: '',
+      searchText: '',
+      list: [],
+      api: getAgents,
+      params: {
+        page: 1,
+        pageSize: 5,
+        type: 3
+      }
     }
   },
   watch: {
@@ -77,7 +93,23 @@ export default {
     }
   },
   methods: {
-    onSearch() {}
+    getListData(data) {
+      console.log(data)
+      if (!data.list.length) {
+        this.list = []
+        this.listLoading = false
+        return false
+      }
+      this.list = data.list
+      this.listLoading = false
+    },
+    onSearch() {
+      this.listLoading = true
+      this.params = Object.assign({}, this.params, {
+        name: this.searchText,
+        type: this.activeName
+      })
+    }
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="view-approval-management">
     <div class="searching-box">
-      <l-date-picker v-model="dateRange" @change="reloadList"></l-date-picker>
+      <l-date-picker v-model="dateRange" @change="onSearch"></l-date-picker>
       <el-button size="small" type="primary" plain @click="invitation">邀请用户</el-button>
     </div>
     <el-table
@@ -15,32 +15,32 @@
     >
       <el-table-column label="申请人" align="center">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          <span v-null="scope.row.name">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="电话" align="center">
         <template slot-scope="scope">
-          {{ scope.row.title }}
+          <span v-null="scope.row.name">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="工作单位" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.author }}</span>
+          <span v-null="scope.row.name">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="身份证号" align="center">
         <template slot-scope="scope">
-          {{ scope.row.pageviews }}
+          <span v-null="scope.row.name">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="代理身份" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.status }}</span>
+          <span v-null="scope.row.type">{{ scope.row.type | agentType }}</span>
         </template>
       </el-table-column>
       <el-table-column label="审核状态" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.status }}</span>
+          <span v-null="scope.row.status">{{ scope.row.status }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="操作">
@@ -49,24 +49,50 @@
         </template>
       </el-table-column>
     </el-table>
+    <l-pagination :api="api" :params="params" @list="getListData"></l-pagination>
   </div>
 </template>
 
 <script>
+import { getApprovalList } from '@/api/approvalManagement'
+import Moment from 'moment'
+
+const DEFAULT_DATE = [Moment().subtract(1, 'weeks').format('YYYY-MM-DD'), Moment().format('YYYY-MM-DD')]
+
 export default {
   name: 'ApprovalManagement',
   data() {
     return {
-      dateRange: [],
-      listLoading: false,
-      list: [{}]
+      dateRange: DEFAULT_DATE,
+      listLoading: true,
+      list: [],
+      api: getApprovalList,
+      params: {
+        page: 1,
+        pageSize: 10,
+        beginTime: DEFAULT_DATE[0],
+        endTime: DEFAULT_DATE[1]
+      }
     }
   },
   methods: {
-    reloadList(val) {
-      console.log(this.dateRange)
+    getListData(data) {
+      console.log(data)
+      if (!data.list.length) {
+        this.list = []
+        this.listLoading = false
+        return false
+      }
+      this.list = data.list
+      this.listLoading = false
     },
-    onSearch() {},
+    onSearch() {
+      this.listLoading = true
+      this.params = Object.assign({}, this.params, {
+        beginTime: Moment(this.dateRange[0]).format('YYYY-MM-DD'),
+        endTime: Moment(this.dateRange[1]).format('YYYY-MM-DD')
+      })
+    },
     invitation() {},
     getApprove(row) {
       this.$confirm('', '审核状况', {

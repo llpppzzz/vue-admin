@@ -14,53 +14,74 @@
     >
       <el-table-column label="流水编号" align="center">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          <span v-null="scope.row.reasonObj">{{ scope.row.reasonObj }}</span>
         </template>
       </el-table-column>
       <el-table-column label="姓名" align="center">
         <template slot-scope="scope">
-          {{ scope.row.title }}
+          <span v-null="scope.row.name">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="代理身份" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.author }}</span>
+          <span v-null="scope.row.userType">{{ scope.row.userType | agentType }}</span>
         </template>
       </el-table-column>
       <el-table-column label="金额" align="center">
         <template slot-scope="scope">
-          {{ scope.row.pageviews }}
+          <span v-null="scope.row.amount">{{ scope.row.amount }}</span>
         </template>
       </el-table-column>
       <el-table-column label="佣金类型" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.status }}</span>
+          <span v-null="scope.row.type">{{ scope.row.type }}</span>
         </template>
       </el-table-column>
       <el-table-column label="发生时间" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.status }}</span>
+          <span v-null="scope.row.createdAt">{{ scope.row.createdAt }}</span>
         </template>
       </el-table-column>
     </el-table>
+    <l-pagination :api="api" :params="params" @list="getListData"></l-pagination>
   </div>
 </template>
 
 <script>
+import { getFinancialList } from '@/api/financialManagement'
+
 export default {
   name: 'FinancialManagement',
   data() {
     return {
       dateRange: [],
-      listLoading: false,
-      list: [{}]
+      listLoading: true,
+      list: [],
+      api: getFinancialList,
+      params: {
+        page: 1,
+        pageSize: 10
+      }
     }
   },
   methods: {
-    reloadList(val) {
-      console.log(this.dateRange)
+    getListData(data) {
+      console.log(data)
+      if (!data.list.length) {
+        this.list = []
+        this.listLoading = false
+        return false
+      }
+      this.list = data.list
+      this.listLoading = false
     },
-    onSearch() {},
+    onSearch() {
+      this.listLoading = true
+      this.params = Object.assign({}, this.params, {
+        beginTime: '',
+        endTime: ''
+      })
+    },
     invitation() {},
     exportList(row) {
     }
