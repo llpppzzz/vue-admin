@@ -1,13 +1,13 @@
 <template>
   <div class="agent-management-container">
     <div class="searching-box">
-      <el-tabs v-model="activeName" @tab-click="getAgents">
+      <el-tabs v-model="activeName" @tab-click="onSearch">
         <el-tab-pane label="区域代理" name="3"></el-tab-pane>
         <el-tab-pane label="一级代理" name="1"></el-tab-pane>
         <el-tab-pane label="二级代理" name="2"></el-tab-pane>
         <el-tab-pane label="机构" name="4"></el-tab-pane>
       </el-tabs>
-      <l-input-search @confirm="onSearch" />
+      <l-input-search v-model="searchText" @confirm="onSearch" />
     </div>
     <div class="table-box">
       <el-table
@@ -72,6 +72,7 @@
           </template>
         </el-table-column>
       </el-table>
+      <l-pagination :api="api" :params="params" @list="getListData"></l-pagination>
     </div>
     <el-dialog
       title="晋升"
@@ -113,7 +114,14 @@ export default {
   },
   data() {
     return {
-      list: [{}],
+      list: [],
+      api: getAgents,
+      params: {
+        page: 1,
+        pageSize: 10,
+        type: 3
+      },
+      searchText: '',
       dialogVisible: false,
       agentSelected: '',
       agentOptions: [{
@@ -126,7 +134,7 @@ export default {
         label: '二级代理',
         value: 2
       }],
-      listLoading: false,
+      listLoading: true,
       activeName: '3',
       searchingInfo: ''
     }
@@ -137,22 +145,25 @@ export default {
     ])
   },
   created() {
-    this.getAgents()
   },
   methods: {
-    async getAgents() {
-      try {
-        const params = {
-          page: 1,
-          pageSize: 10,
-          type: this.activeName
-        }
-        const res = await getAgents(params)
-      } catch (e) {
-        console.log(e)
+    getListData(data) {
+      console.log(data)
+      if (!data.list.length) {
+        this.list = []
+        this.listLoading = false
+        return false
       }
+      this.list = data.list
+      this.listLoading = false
     },
-    onSearch() {},
+    onSearch() {
+      this.listLoading = true
+      this.params = Object.assign({}, this.params, {
+        name: this.searchText,
+        type: this.activeName
+      })
+    },
     openDetails(row) {
       this.$router.push({ path: '/userManagement/agentDetail' })
     },
