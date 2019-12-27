@@ -1,7 +1,7 @@
 <template>
   <div class="agent-management-container">
     <div class="searching-box">
-      <el-tabs v-model="activeName" @change="getAgents">
+      <el-tabs v-model="activeName" @tab-click="getAgents">
         <el-tab-pane label="区域代理" name="3"></el-tab-pane>
         <el-tab-pane label="一级代理" name="1"></el-tab-pane>
         <el-tab-pane label="二级代理" name="2"></el-tab-pane>
@@ -145,8 +145,7 @@ export default {
         const params = {
           page: 1,
           pageSize: 10,
-          type: this.activeName,
-          status: 10
+          type: this.activeName
         }
         const res = await getAgents(params)
       } catch (e) {
