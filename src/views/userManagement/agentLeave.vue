@@ -146,7 +146,7 @@ export default {
 
 <style lang="scss">
 .view-agent-leave {
-  padding: 16px;
+  /*padding: 16px;*/
   .grid-content {
     min-height: 32px;
     line-height: 32px;

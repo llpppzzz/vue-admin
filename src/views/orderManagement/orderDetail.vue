@@ -134,7 +134,7 @@ export default {
 <style lang="scss" scoped>
   .view-order-detail {
     background: #fff;
-    padding: 16px;
+    /*padding: 16px;*/
     .grid-content {
       line-height: 32px;
     }

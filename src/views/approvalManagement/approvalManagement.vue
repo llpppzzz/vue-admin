@@ -76,6 +76,9 @@ export default {
     }
   },
   methods: {
+    formatDate(val) {
+      return Moment(val).format('YYYY-MM-DD')
+    },
     getListData(data) {
       console.log(data)
       if (!data.list.length) {
@@ -89,8 +92,8 @@ export default {
     onSearch() {
       this.listLoading = true
       this.params = Object.assign({}, this.params, {
-        beginTime: Moment(this.dateRange[0]).format('YYYY-MM-DD'),
-        endTime: Moment(this.dateRange[1]).format('YYYY-MM-DD')
+        beginTime: this.formatDate(this.dateRange[0]),
+        endTime: this.formatDate(this.dateRange[1])
       })
     },
     invitation() {},

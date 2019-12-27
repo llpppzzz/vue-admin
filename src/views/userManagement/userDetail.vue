@@ -210,7 +210,7 @@ export default {
 <style lang="scss" scoped>
 .view-user-detail {
   background: #fff;
-  padding: 16px;
+  /*padding: 16px;*/
   .get-back {
     margin-bottom: 24px;
   }
