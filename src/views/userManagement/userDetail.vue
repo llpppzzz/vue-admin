@@ -128,7 +128,7 @@
       >
         <el-table-column label="积分来源" align="center">
           <template slot-scope="scope">
-            <span v-null="scope.row.reason">{{ scope.row.reason }}</span>
+            <span v-null="scope.row.description">{{ scope.row.description }}</span>
           </template>
         </el-table-column>
         <el-table-column label="积分获得时间" align="center">

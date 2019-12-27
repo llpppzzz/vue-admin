@@ -14,7 +14,7 @@
     >
       <el-table-column label="流水编号" align="center">
         <template slot-scope="scope">
-          <span v-null="scope.row.reasonObj">{{ scope.row.reasonObj }}</span>
+          <span v-null="scope.row.id">{{ scope.row.id }}</span>
         </template>
       </el-table-column>
       <el-table-column label="姓名" align="center">
@@ -24,7 +24,7 @@
       </el-table-column>
       <el-table-column label="代理身份" align="center">
         <template slot-scope="scope">
-          <span v-null="scope.row.userType">{{ scope.row.userType | agentType }}</span>
+          <span v-null="scope.row.type">{{ scope.row.type | agentType }}</span>
         </template>
       </el-table-column>
       <el-table-column label="金额" align="center">
@@ -34,7 +34,7 @@
       </el-table-column>
       <el-table-column label="佣金类型" align="center">
         <template slot-scope="scope">
-          <span v-null="scope.row.type">{{ scope.row.type }}</span>
+          <span v-null="scope.row.reason">{{ scope.row.reason | commissionType }}</span>
         </template>
       </el-table-column>
       <el-table-column label="发生时间" align="center">

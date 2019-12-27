@@ -26,37 +26,37 @@
         </el-table-column>
         <el-table-column label="身份证" align="center">
           <template slot-scope="scope">
-            <span v-null="scope.row.name">{{ scope.row.name }}</span>
+            <span v-null="scope.row.idCard">{{ scope.row.idCard }}</span>
           </template>
         </el-table-column>
         <el-table-column label="电话" align="center">
           <template slot-scope="scope">
-            <span v-null="scope.row.name">{{ scope.row.name }}</span>
+            <span v-null="scope.row.mobile">{{ scope.row.mobile }}</span>
           </template>
         </el-table-column>
         <el-table-column label="工作单位" align="center">
           <template slot-scope="scope">
-            <span v-null="scope.row.name">{{ scope.row.name }}</span>
+            <span v-null="scope.row.company">{{ scope.row.company }}</span>
           </template>
         </el-table-column>
         <el-table-column label="佣金" align="center">
           <template slot-scope="scope">
-            <span v-null="scope.row.name">{{ scope.row.name }}</span>
+            <span v-null="scope.row.priceAmount">{{ scope.row.priceAmount }}</span>
           </template>
         </el-table-column>
         <el-table-column label="积分" align="center">
           <template slot-scope="scope">
-            <span v-null="scope.row.name">{{ scope.row.name }}</span>
+            <span v-null="scope.row.integral">{{ scope.row.integral }}</span>
           </template>
         </el-table-column>
         <el-table-column align="center" label="代理身份">
           <template slot-scope="scope">
-            <span v-null="scope.row.name">{{ scope.row.name }}</span>
+            <span v-null="scope.row.type">{{ scope.row.type | agentType }}</span>
           </template>
         </el-table-column>
         <el-table-column align="center" label="上级名称">
           <template slot-scope="scope">
-            <span v-null="scope.row.name">{{ scope.row.name }}</span>
+            <span v-null="scope.row.inviterUserName">{{ scope.row.inviterUserName }}</span>
           </template>
         </el-table-column>
         <el-table-column align="center" prop="createdAt" label="用户创建时间">
@@ -64,7 +64,7 @@
             <span v-null="scope.row.createdAt">{{ scope.row.createdAt }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="created_at" label="操作" width="230">
+        <el-table-column align="center" label="操作" width="230">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" plain @click="openDetails(scope.row)">详情</el-button>
             <el-button size="mini" type="danger" plain @click="openLeave(scope.row)">离职</el-button>

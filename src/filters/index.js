@@ -3,13 +3,19 @@ import Vue from 'vue'
 const filters = {
   agentType(type) {
     const map = {
-      'CUSTOMER': '普通用户',
-      'AGENCY_1': '一级代理',
-      'AGENCY_2': '二级代理',
-      'AREA_AGENCY': '区域代理',
-      'INSTITUTION': '机构'
+      '0': '普通用户',
+      '1': '一级代理',
+      '2': '二级代理',
+      '3': '区域代理',
+      '4': '机构'
     }
-    console.log(map[type])
+    return map[type] || type
+  },
+  commissionType(type) {
+    const map = {
+      '1': '提现',
+      '0': '邀请'
+    }
     return map[type] || type
   }
 }

@@ -20,27 +20,27 @@
       </el-table-column>
       <el-table-column label="电话" align="center">
         <template slot-scope="scope">
-          <span v-null="scope.row.name">{{ scope.row.name }}</span>
+          <span v-null="scope.row.mobile">{{ scope.row.mobile }}</span>
         </template>
       </el-table-column>
       <el-table-column label="工作单位" align="center">
         <template slot-scope="scope">
-          <span v-null="scope.row.name">{{ scope.row.name }}</span>
+          <span v-null="scope.row.company">{{ scope.row.company }}</span>
         </template>
       </el-table-column>
       <el-table-column label="身份证号" align="center">
         <template slot-scope="scope">
-          <span v-null="scope.row.name">{{ scope.row.name }}</span>
+          <span v-null="scope.row.idCard">{{ scope.row.idCard }}</span>
         </template>
       </el-table-column>
       <el-table-column label="代理身份" align="center">
         <template slot-scope="scope">
-          <span v-null="scope.row.type">{{ scope.row.type | agentType }}</span>
+          <span v-null="scope.row.typeLabel">{{ scope.row.typeLabel }}</span>
         </template>
       </el-table-column>
       <el-table-column label="审核状态" align="center">
         <template slot-scope="scope">
-          <span v-null="scope.row.status">{{ scope.row.status }}</span>
+          <span v-null="scope.row.statusLabel">{{ scope.row.statusLabel }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="操作">
@@ -69,9 +69,9 @@ export default {
       api: getApprovalList,
       params: {
         page: 1,
-        pageSize: 10,
-        beginTime: DEFAULT_DATE[0],
-        endTime: DEFAULT_DATE[1]
+        pageSize: 10
+        // beginTime: DEFAULT_DATE[0],
+        // endTime: DEFAULT_DATE[1]
       }
     }
   },
