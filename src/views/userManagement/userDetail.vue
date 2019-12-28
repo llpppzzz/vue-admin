@@ -4,35 +4,36 @@
     <div class="brief-info">
       <el-row :gutter="20">
         <el-col :span="3"><div class="grid-content row-title">姓名：</div></el-col>
-        <el-col :span="6"><div class="grid-content bg-purple" v-null="info.name">{{ info.name }}</div></el-col>
-        <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+        <el-col :span="6"><div class="grid-content bg-purple">
+          <span v-null="info.name">{{ info.name }}</span>
+        </div></el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="3"><div class="grid-content row-title">身份证：</div></el-col>
-        <el-col :span="6"><div class="grid-content bg-purple" v-null="info.idCard">{{ info.idCard }}</div></el-col>
-        <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+        <el-col :span="6"><div class="grid-content bg-purple">
+          <span v-null="info.idCard">{{ info.idCard }}</span>
+        </div></el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="3"><div class="grid-content row-title">电话：</div></el-col>
-        <el-col :span="6"><div class="grid-content bg-purple" v-null="info.mobile">{{ info.mobile }}</div></el-col>
-        <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+        <el-col :span="6"><div class="grid-content bg-purple">
+          <span v-null="info.mobile">{{ info.mobile }}</span>
+        </div></el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="3"><div class="grid-content row-title">工作单位：</div></el-col>
-        <el-col :span="6"><div class="grid-content bg-purple" v-null="info.company">{{ info.company }}</div></el-col>
-        <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+        <el-col :span="6"><div class="grid-content bg-purple">
+          <span v-null="info.company">{{ info.company }}</span>
+        </div></el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="3"><div class="grid-content row-title">代理人：</div></el-col>
-        <el-col :span="6"><div class="grid-content bg-purple" v-null="info.inviterUserName">{{ info.inviterUserName }}</div></el-col>
         <el-col :span="6"><div class="grid-content bg-purple">
-          <el-button type="primary" size="mini" plain @click="dialogVisible = true">修改</el-button>
+          <span v-null="info.inviterUserName">{{ info.inviterUserName }}</span>
         </div></el-col>
-        <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+        <el-col :span="6"><div class="grid-content bg-purple">
+          <el-button type="primary" size="mini" plain @click="changeInviter">修改</el-button>
+        </div></el-col>
       </el-row>
     </div>
     <detail-block title="申卡订单">
@@ -163,24 +164,24 @@
         </el-table-column>
       </el-table>
     </detail-block>
-    <bind-agent-dialog :visible.sync="dialogVisible"/>
+    <!--<bind-agent-dialog :visible.sync="dialogVisible"/>-->
   </div>
 </template>
 
 <script>
 import DetailBlock from './components/detailBlock'
-import BindAgentDialog from './components/bindAgentDialog'
-import { getUsersInformation } from '@/api/userManagement'
+// import BindAgentDialog from './components/bindAgentDialog'
+import { getUsersInformation, changeUserInviter } from '@/api/userManagement'
 
 export default {
   name: 'UserDetail',
   components: {
-    DetailBlock,
-    BindAgentDialog
+    // BindAgentDialog,
+    DetailBlock
   },
   data() {
     return {
-      dialogVisible: false,
+      // dialogVisible: false,
       userId: this.$route.query.userId || '',
       info: {},
       inviteList: [],
@@ -199,6 +200,18 @@ export default {
         this.info = res.data.user
         this.inviteList = res.data.inviteList || []
         this.integralsLogList = res.data.integralsLogList || []
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    async changeInviter() {
+      try {
+        const res = await changeUserInviter({ userId: this.userId })
+        this.getUsersInformation()
+        this.$message({
+          type: 'success',
+          message: '修改成功'
+        })
       } catch (e) {
         console.log(e)
       }

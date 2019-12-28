@@ -17,7 +17,7 @@
       >
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <el-radio v-model="radioValue" :label="scope.row.id" @change="radioChange(scope.row)"></el-radio>
+            <el-radio v-model="radioValue" :label="scope.row.id"></el-radio>
           </template>
         </el-table-column>
         <el-table-column label="姓名" align="center">
@@ -75,8 +75,7 @@ export default {
       api: getAgents,
       params: {
         page: 1,
-        pageSize: 5,
-        type: 3
+        pageSize: 5
       }
     }
   },
