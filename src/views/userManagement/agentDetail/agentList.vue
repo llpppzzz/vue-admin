@@ -1,9 +1,7 @@
 <template>
   <div class="tab-agent-list">
     <el-table
-      v-loading="listLoading"
-      :data="[]"
-      element-loading-text="Loading"
+      :data="info"
       border
       fit
       highlight-current-row
@@ -11,47 +9,47 @@
     >
       <el-table-column label="姓名" align="center">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          <span v-null="scope.row.name"></span>{{ scope.row.name }}
         </template>
       </el-table-column>
       <el-table-column label="身份证号" align="center">
         <template slot-scope="scope">
-          {{ scope.row.title }}
+          <span v-null="scope.row.idCard"></span>{{ scope.row.idCard }}
         </template>
       </el-table-column>
       <el-table-column label="电话" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.author }}</span>
+          <span v-null="scope.row.mobile"></span>{{ scope.row.mobile }}
         </template>
       </el-table-column>
       <el-table-column label="工作单位" align="center">
         <template slot-scope="scope">
-          {{ scope.row.pageviews }}
+          <span v-null="scope.row.company"></span>{{ scope.row.company }}
         </template>
       </el-table-column>
       <el-table-column label="佣金" align="center">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status">{{ scope.row.status }}</el-tag>
+          <span v-null="scope.row.priceAmount"></span>{{ scope.row.priceAmount }}
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="积分">
+      <el-table-column align="center" label="积分">
         <template slot-scope="scope">
-          <span>{{ scope.row.display_time }}</span>
+          <span v-null="scope.row.integral"></span>{{ scope.row.integral }}
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="代理身份">
+      <el-table-column align="center" label="代理身份">
         <template slot-scope="scope">
-          <span>{{ scope.row.display_time }}</span>
+          <span v-null="scope.row.typeLabel"></span>{{ scope.row.typeLabel }}
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="申贷业务">
+      <el-table-column align="center" label="申贷业务">
         <template slot-scope="scope">
-          <span>{{ scope.row.display_time }}</span>
+          <span v-null="scope.row.creditApplyQuantity"></span>{{ scope.row.creditApplyQuantity }}
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="申卡业务">
+      <el-table-column align="center" label="申卡业务">
         <template slot-scope="scope">
-          <span>{{ scope.row.display_time }}</span>
+          <span v-null="scope.row.creditCardApplyQuantity"></span>{{ scope.row.creditCardApplyQuantity }}
         </template>
       </el-table-column>
     </el-table>
@@ -61,9 +59,14 @@
 <script>
 export default {
   name: 'AgentList',
+  inject: ['userInfo'],
   data() {
     return {
-      listLoading: false
+    }
+  },
+  computed: {
+    info() {
+      return this.userInfo.data.agencyList || []
     }
   }
 }

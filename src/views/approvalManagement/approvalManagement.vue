@@ -1,5 +1,11 @@
 <template>
   <div class="view-approval-management">
+    <el-dialog
+      title="提示"
+      :visible.sync="QRCodeUrlVisible"
+      width="30%">
+      <img :src="QRCodeUrl" alt="QRCodeUrl">
+    </el-dialog>
     <div class="searching-box">
       <l-date-picker v-model="dateRange" @change="onSearch"></l-date-picker>
       <el-button size="small" type="primary" plain @click="invitation">邀请用户</el-button>
@@ -13,6 +19,11 @@
       highlight-current-row
       stripe
     >
+      <el-table-column label="选择" align="center" width="80">
+        <template slot-scope="scope">
+          <el-radio v-model="radioValue" :label="scope.row.userId" :disabled="scope.row.status !== 1"></el-radio>
+        </template>
+      </el-table-column>
       <el-table-column label="申请人" align="center">
         <template slot-scope="scope">
           <span v-null="scope.row.name">{{ scope.row.name }}</span>
@@ -45,7 +56,8 @@
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" type="primary" plain @click="getApprove(scope.row)">审核</el-button>
+          <el-button v-if="scope.row.status === 0" size="mini" type="primary" plain @click="getApprove(scope.row)">审核</el-button>
+          <span v-else class="null-handler"></span>
         </template>
       </el-table-column>
     </el-table>
@@ -54,7 +66,7 @@
 </template>
 
 <script>
-import { getApprovalList } from '@/api/approvalManagement'
+import { getApprovalList, doApproval, getQRCode } from '@/api/approvalManagement'
 import Moment from 'moment'
 
 const DEFAULT_DATE = [Moment().subtract(1, 'weeks').format('YYYY-MM-DD'), Moment().format('YYYY-MM-DD')]
@@ -69,10 +81,13 @@ export default {
       api: getApprovalList,
       params: {
         page: 1,
-        pageSize: 10
-        // beginTime: DEFAULT_DATE[0],
-        // endTime: DEFAULT_DATE[1]
-      }
+        pageSize: 10,
+        beginTime: DEFAULT_DATE[0],
+        endTime: DEFAULT_DATE[1]
+      },
+      radioValue: '',
+      QRCodeUrl: '',
+      QRCodeUrlVisible: false
     }
   },
   methods: {
@@ -80,7 +95,6 @@ export default {
       return Moment(val).format('YYYY-MM-DD')
     },
     getListData(data) {
-      console.log(data)
       if (!data.list.length) {
         this.list = []
         this.listLoading = false
@@ -96,25 +110,56 @@ export default {
         endTime: this.formatDate(this.dateRange[1])
       })
     },
-    invitation() {},
+    async invitation() {
+      try {
+        const row = this.list.filter(one => this.radioValue === one.userId)[0] || {}
+        const params = {
+          type: row.type || '',
+          userId: this.radioValue || 0
+        }
+        console.log(params)
+        const res = await getQRCode(params)
+        this.QRCodeUrl = res.data.url
+        this.QRCodeUrlVisible = true
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    showMessage(type, message) {
+      this.$message({
+        type,
+        message
+      })
+    },
     getApprove(row) {
+      const params = {
+        subId: row.userId
+      }
       this.$confirm('', '审核状况', {
         distinguishCancelAndClose: true,
         confirmButtonText: '通过',
         cancelButtonText: '不通过',
         center: true
-      }).then(() => {
-        this.$message({
-          type: 'info',
-          message: '已通过审核'
-        })
-      }).catch(action => {
-        this.$message({
-          type: 'info',
-          message: action === 'cancel'
-            ? '放弃保存并离开页面'
-            : '停留在当前页面'
-        })
+      }).then(async() => {
+        try {
+          params.status = 1
+          const res = await doApproval(params)
+          this.showMessage('success', '已通过审核')
+          this.onSearch()
+        } catch (e) {
+          this.showMessage('error', '审核失败')
+        }
+      }).catch(async(action) => {
+        if (action === 'cancel') {
+          try {
+            params.status = 2
+            const res = await doApproval(params)
+            this.showMessage('success', '已拒绝通过审核')
+            this.onSearch()
+          } catch (e) {
+            this.showMessage('error', '审核失败')
+          }
+        }
       })
     }
   }
@@ -131,6 +176,9 @@ export default {
       .el-input {
         width: 200px;
       }
+    }
+    .el-table .el-radio__label {
+      display: none;
     }
   }
 </style>

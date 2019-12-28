@@ -164,10 +164,20 @@ export default {
       })
     },
     openDetails(row) {
-      this.$router.push({ path: '/userManagement/agentDetail' })
+      this.$router.push({
+        path: '/userManagement/agentDetail',
+        query: {
+          userId: row.userId
+        }
+      })
     },
     openLeave(row) {
-      this.$router.push({ path: '/userManagement/agentLeave' })
+      this.$router.push({
+        path: '/userManagement/agentLeave',
+        query: {
+          userId: row.userId
+        }
+      })
     }
   }
 }

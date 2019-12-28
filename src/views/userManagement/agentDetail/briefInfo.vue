@@ -1,47 +1,46 @@
 <template>
-<div class="tab-brief-info">
-  <el-row :gutter="20">
-    <el-col :span="3"><div class="grid-content row-title">姓名：</div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple">蓄势待发</div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-  </el-row>
-  <el-row :gutter="20">
-    <el-col :span="3"><div class="grid-content row-title">身份证：</div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple">213123123123123123</div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-  </el-row>
-  <el-row :gutter="20">
-    <el-col :span="3"><div class="grid-content row-title">电话：</div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple">213123123123123123</div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-  </el-row>
-  <el-row :gutter="20">
-    <el-col :span="3"><div class="grid-content row-title">工作单位：</div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple">213123123123123123</div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-  </el-row>
-  <el-row :gutter="20">
-    <el-col :span="3"><div class="grid-content row-title">代理身份：</div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple">213123123123123123</div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-  </el-row>
-  <el-row :gutter="20">
-    <el-col :span="3"><div class="grid-content row-title">上级名称：</div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple">213123123123123123</div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-  </el-row>
-</div>
+  <div class="tab-brief-info">
+    <el-row v-for="item in dataArr" :key="item.field" :gutter="20" >
+      <el-col :span="3"><div class="grid-content row-title">{{ item.title }}：</div></el-col>
+      <el-col :span="6"><div class="grid-content bg-purple">
+        <span v-null="info[item.field]">{{ info[item.field] }}</span>
+      </div></el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'BriefInfo'
+  name: 'BriefInfo',
+  inject: ['userInfo'],
+  data() {
+    return {
+      dataArr: [{
+        title: '姓名',
+        field: 'name'
+      }, {
+        title: '身份证',
+        field: 'idCard'
+      }, {
+        title: '电话',
+        field: 'mobile'
+      }, {
+        title: '工作单位',
+        field: 'company'
+      }, {
+        title: '代理身份',
+        field: 'typeLabel'
+      }, {
+        title: '上级名称',
+        field: 'inviterUserName'
+      }]
+    }
+  },
+  computed: {
+    info() {
+      return this.userInfo.data.user || {}
+    }
+  }
 }
 </script>
 

@@ -19,6 +19,7 @@ import ApplyList from './agentDetail/applyList'
 import IncomeInfo from './agentDetail/incomeInfo'
 import UserList from './agentDetail/userList'
 import AgentList from './agentDetail/agentList'
+import { getAgentInformation } from '@/api/userManagement'
 export default {
   name: 'AgentDetail',
   components: {
@@ -28,9 +29,18 @@ export default {
     UserList,
     AgentList
   },
+  provide() {
+    return {
+      userInfo: this.userInfo
+    }
+  },
   data() {
     return {
-      activeName: '1'
+      activeName: '1',
+      userId: this.$route.query.userId || '',
+      userInfo: {
+        data: {}
+      }
     }
   },
   computed: {
@@ -48,6 +58,19 @@ export default {
           return AgentList
         default:
           return BriefInfo
+      }
+    }
+  },
+  created() {
+    this.getAgentInformation()
+  },
+  methods: {
+    async getAgentInformation() {
+      try {
+        const res = await getAgentInformation({ userId: this.userId })
+        this.userInfo.data = res.data
+      } catch (e) {
+        console.log(e)
       }
     }
   }
