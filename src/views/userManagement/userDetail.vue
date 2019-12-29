@@ -120,6 +120,7 @@
       </el-table>
     </detail-block>
     <detail-block title="积分详情">
+      <span slot="pullLeft">{{ info.integral }}分</span>
       <el-table
         :data="integralsLogList"
         border
