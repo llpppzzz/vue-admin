@@ -45,15 +45,18 @@
         <vue-ueditor-wrap v-model="msg2" :config="myConfig"></vue-ueditor-wrap>
       </el-form-item>
       <el-form-item label="佣金设置">
-        <el-row :gutter="20">
+        <el-row>
           <el-col :span="6"><div class="grid-content">
             <span class="sub-title">佣金金额</span>
             <el-input v-model="commission" size="small" type="number">
               <span class="suffix-text" slot="suffix">元</span>
             </el-input>
           </div></el-col>
+          <el-col :span="6"><div class="grid-content"></div></el-col>
+          <el-col :span="6"><div class="grid-content"></div></el-col>
+          <el-col :span="6"><div class="grid-content"></div></el-col>
         </el-row>
-        <el-row :gutter="20">
+        <el-row>
           <el-col :span="6"><div class="grid-content">
             <span class="sub-title">一级代理分佣</span>
             <el-input v-model="commission" size="small" type="number">
@@ -81,7 +84,7 @@
         </el-row>
       </el-form-item>
       <el-form-item label="积分设置">
-        <el-row :gutter="20">
+        <el-row>
           <el-col :span="8"><div class="grid-content">
             <span class="sub-title">积分有效期</span>
             <el-input v-model="commission" size="small" type="number">
@@ -89,7 +92,7 @@
             </el-input>
           </div></el-col>
         </el-row>
-        <el-row :gutter="20">
+        <el-row>
           <el-col :span="8"><div class="grid-content">
             <span class="sub-title">一级代理积分</span>
             <el-input v-model="commission" size="small" type="number">
@@ -109,7 +112,7 @@
             </el-input>
           </div></el-col>
         </el-row>
-        <el-row :gutter="20">
+        <el-row>
           <el-col :span="8"><div class="grid-content">
             <span class="sub-title">一级用户积分</span>
             <el-input v-model="commission" size="small" type="number">
@@ -195,10 +198,18 @@ export default {
 <style lang="scss" scoped>
 .view-card-detail{
   .sub-title {
-    color: #606266
+    width: 97px;
+    margin-right: 8px;
+    text-align: right;
+    flex-shrink: 0;
+    color: #606266;
+    white-space: nowrap;
   }
   .suffix-text {
     padding: 0 10px;
+  }
+  .grid-content {
+    display: flex;
   }
 }
 </style>

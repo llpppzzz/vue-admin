@@ -66,6 +66,11 @@
             <span v-null="scope.row.statusLabel">{{ scope.row.statusLabel }}</span>
           </template>
         </el-table-column>
+        <el-table-column label="订单时间" align="center">
+          <template slot-scope="scope">
+            <span v-null="scope.row.orderTime">{{ scope.row.orderTime }}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="订单备注" align="center">
           <template slot-scope="scope">
             <span v-null="scope.row.remark">{{ scope.row.remark }}</span>

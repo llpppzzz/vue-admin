@@ -15,27 +15,27 @@
     >
       <el-table-column label="图片" align="center">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          <span v-null="scope.row.name">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="银行名称" align="center">
         <template slot-scope="scope">
-          {{ scope.row.title }}
+          <span v-null="scope.row.name">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="产品名称" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.author }}</span>
+          <span v-null="scope.row.name">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="产品标签" align="center">
         <template slot-scope="scope">
-          {{ scope.row.pageviews }}
+          <span v-null="scope.row.name">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="是否上架" align="center">
+      <el-table-column label="是否上架" align="center">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status">{{ scope.row.status }}</el-tag>
+          <span v-null="scope.row.name">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="操作" width="180">
