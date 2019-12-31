@@ -206,7 +206,7 @@ export default {
     white-space: nowrap;
   }
   .suffix-text {
-    padding: 0 10px;
+    padding-right: 8px;
   }
   .grid-content {
     display: flex;

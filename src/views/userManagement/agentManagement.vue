@@ -17,7 +17,6 @@
         border
         fit
         highlight-current-row
-        stripe
       >
         <el-table-column label="姓名" align="center">
           <template slot-scope="scope">

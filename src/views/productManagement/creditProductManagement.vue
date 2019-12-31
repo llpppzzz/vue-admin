@@ -11,7 +11,6 @@
       border
       fit
       highlight-current-row
-      stripe
     >
       <el-table-column label="图片" align="center">
         <template slot-scope="scope">

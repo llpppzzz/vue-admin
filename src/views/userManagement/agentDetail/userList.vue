@@ -11,7 +11,6 @@
           border
           fit
           highlight-current-row
-          stripe
         >
           <el-table-column label="订单ID" align="center">
             <template slot-scope="scope">

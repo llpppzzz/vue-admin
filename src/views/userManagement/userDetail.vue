@@ -121,7 +121,6 @@
         border
         fit
         highlight-current-row
-        stripe
       >
         <el-table-column label="积分来源" align="center">
           <template slot-scope="scope">
@@ -146,7 +145,6 @@
         border
         fit
         highlight-current-row
-        stripe
       >
         <el-table-column label="邀请用户" align="center">
           <template slot-scope="scope">

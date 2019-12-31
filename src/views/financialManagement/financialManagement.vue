@@ -10,7 +10,6 @@
       border
       fit
       highlight-current-row
-      stripe
     >
       <el-table-column label="流水编号" align="center">
         <template slot-scope="scope">
