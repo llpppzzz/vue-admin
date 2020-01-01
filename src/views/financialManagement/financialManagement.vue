@@ -96,12 +96,14 @@ export default {
       })
     },
     invitation() {},
-    async exportList(row) {
+    exportList(row) {
       const params = {
-        beginTime: Moment().subtract(1, 'years').format('YYYY-MM-DD'),
-        endTime: Moment().format('YYYY-MM-DD')
+        beginTime: encodeURIComponent(Moment().subtract(1, 'years').format('YYYY-MM-DD')),
+        endTime: encodeURIComponent(Moment().format('YYYY-MM-DD'))
       }
-      location.href = `/web/user/wallets/export?beginTime=${params.beginTime}&endTime=${params.endTime}`
+      const baseApi = process.env.VUE_APP_BASE_API
+      const url = `${baseApi}/web/user/wallets/export?beginTime=${params.beginTime}&endTime=${params.endTime}`
+      location.href = url
       // try {
       //   const params = {
       //     beginTime: Moment().subtract(1, 'years').format('YYYY-MM-DD'),
