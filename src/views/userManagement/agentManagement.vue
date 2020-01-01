@@ -58,6 +58,11 @@
             <span v-null="scope.row.inviterUserName">{{ scope.row.inviterUserName }}</span>
           </template>
         </el-table-column>
+        <el-table-column align="center" label="状态">
+          <template slot-scope="scope">
+            <span v-null="scope.row.statusLabel">{{ scope.row.statusLabel }}</span>
+          </template>
+        </el-table-column>
         <el-table-column align="center" prop="createdAt" label="用户创建时间">
           <template slot-scope="scope">
             <span v-null="scope.row.createdAt">{{ scope.row.createdAt }}</span>
@@ -67,7 +72,7 @@
           <template slot-scope="scope">
             <el-button size="mini" type="primary" plain @click="openDetails(scope.row)">详情</el-button>
             <el-button size="mini" type="danger" plain @click="openLeave(scope.row)">离职</el-button>
-            <el-button size="mini" type="success" plain @click="dialogVisible = true">晋升</el-button>
+            <el-button size="mini" type="success" plain @click="clickPromotion(scope.row)">晋升</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -88,16 +93,16 @@
         </el-option>
       </el-select>
       <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-  </span>
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="agentPromotion">确 定</el-button>
+      </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import { getAgents } from '@/api/userManagement'
+import { getAgents, agentPromotion } from '@/api/userManagement'
 
 export default {
   name: 'AgentManagement',
@@ -122,7 +127,8 @@ export default {
       },
       searchText: '',
       dialogVisible: false,
-      agentSelected: '',
+      agentSelected: 3,
+      currentRow: {},
       agentOptions: [{
         label: '区域代理',
         value: 3
@@ -132,6 +138,9 @@ export default {
       }, {
         label: '二级代理',
         value: 2
+      }, {
+        label: '机构',
+        value: 4
       }],
       listLoading: true,
       activeName: '3'
@@ -161,6 +170,25 @@ export default {
         name: this.searchText,
         type: this.activeName
       })
+    },
+    clickPromotion(row) {
+      this.currentRow = row
+      this.dialogVisible = true
+    },
+    async agentPromotion() {
+      try {
+        const params = {
+          type: this.agentSelected,
+          userId: this.currentRow.userId
+        }
+        const res = agentPromotion(params)
+        this.dialogVisible = false
+        this.onSearch()
+        this.$message.success(`操作成功！`)
+      } catch (e) {
+        this.dialogVisible = false
+        this.$message.error(`操作失败：${e}`)
+      }
     },
     openDetails(row) {
       this.$router.push({

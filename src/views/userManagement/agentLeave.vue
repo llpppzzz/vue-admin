@@ -124,6 +124,8 @@
 <script>
 import DetailBlock from './components/detailBlock'
 import BindAgentDialog from './components/bindAgentDialog'
+import { agentQuit } from '@/api/userManagement'
+
 export default {
   name: 'AgentLeave',
   components: {
@@ -132,11 +134,30 @@ export default {
   },
   data() {
     return {
-      dialogVisible: false
+      dialogVisible: false,
+      userId: this.$route.query.userId || ''
     }
   },
   methods: {
-    confirm() {},
+    confirm() {
+      this.$confirm('', '确认离职？', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        center: true
+      }).then(async() => {
+        try {
+          const params = {
+            userId: this.userId
+          }
+          const res = await agentQuit(params)
+          this.$message.success('操作成功')
+          this.goBack()
+        } catch (e) {
+          this.$message.error('操作失败')
+        }
+      }).catch((action) => {
+      })
+    },
     goBack() {
       this.$router.back()
     }

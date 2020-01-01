@@ -53,6 +53,11 @@
           <span v-null="scope.row.statusLabel">{{ scope.row.statusLabel }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="创建时间" align="center">
+        <template slot-scope="scope">
+          <span v-null="scope.row.createTime">{{ scope.row.createTime }}</span>
+        </template>
+      </el-table-column>
       <el-table-column align="center" prop="created_at" label="操作">
         <template slot-scope="scope">
           <el-button v-if="scope.row.status === 0" size="mini" type="primary" plain @click="getApprove(scope.row)">审核</el-button>
