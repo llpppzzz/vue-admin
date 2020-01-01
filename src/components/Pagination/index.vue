@@ -95,14 +95,14 @@ export default {
       try {
         if (typeof this.api === 'function') {
           const result = await this.api(params)
-          const length = result.data.aaData && result.data.aaData.length
+          const length = result.data.data && result.data.data.length
           if (!result || !length) {
             this.total = 0
             this.setListData([])
             return false
           }
-          this.total = result.data.iTotalRecordsLong
-          this.setListData(result.data.aaData)
+          this.total = Number(result.data.totalCount)
+          this.setListData(result.data.data)
         }
       } catch (err) {
         this.setListData([])

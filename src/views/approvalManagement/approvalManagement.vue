@@ -1,10 +1,10 @@
 <template>
   <div class="view-approval-management">
     <el-dialog
-      title="提示"
+      title="微信扫描二维码"
       :visible.sync="QRCodeUrlVisible"
-      width="30%">
-      <img :src="QRCodeUrl" alt="QRCodeUrl">
+      width="300px">
+      <canvas id="canvas"></canvas>
     </el-dialog>
     <div class="searching-box">
       <l-date-picker v-model="dateRange" @change="onSearch"></l-date-picker>
@@ -72,6 +72,7 @@
 <script>
 import { getApprovalList, doApproval, getQRCode } from '@/api/approvalManagement'
 import Moment from 'moment'
+import QRCode from 'qrcode'
 
 const DEFAULT_DATE = [Moment().subtract(1, 'weeks').format('YYYY-MM-DD'), Moment().format('YYYY-MM-DD')]
 
@@ -90,7 +91,6 @@ export default {
         endTime: DEFAULT_DATE[1]
       },
       radioValue: '',
-      QRCodeUrl: '',
       QRCodeUrlVisible: false
     }
   },
@@ -123,8 +123,22 @@ export default {
         }
         console.log(params)
         const res = await getQRCode(params)
-        this.QRCodeUrl = res.data.url
         this.QRCodeUrlVisible = true
+        this.$nextTick(() => {
+          const dom = document.getElementById('canvas')
+          const options = {
+            width: 256,
+            height: 256
+          }
+          QRCode.toCanvas(dom, res.data.url, options, (error) => {
+            if (error) {
+              this.showMessage('error', '二维码生成失败！')
+              this.QRCodeUrlVisible = false
+              return
+            }
+            console.log('success!')
+          })
+        })
       } catch (e) {
         console.log(e)
       }
