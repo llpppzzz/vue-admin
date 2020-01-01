@@ -7,3 +7,33 @@ export const UEDITOR_CONFIG = {
   autoFloatEnabled: false,
   initialFrameHeight: 320
 }
+export const AGENT_INVITATION = {
+  1: [{
+    value: 0,
+    label: '普通用户'
+  }, {
+    value: 2,
+    label: '高级合伙人'
+  }, {
+    value: 3,
+    label: '合伙人'
+  }, {
+    value: 4,
+    label: '机构'
+  }],
+  2: [{
+    value: 0,
+    label: '普通用户'
+  }, {
+    value: 3,
+    label: '合伙人'
+  }],
+  3: [{
+    value: 0,
+    label: '普通用户'
+  }],
+  4: [{
+    value: 0,
+    label: '普通用户'
+  }]
+}

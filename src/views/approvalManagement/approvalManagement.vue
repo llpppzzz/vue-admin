@@ -11,7 +11,7 @@
         <l-input-search v-model="searchText" @confirm="onSearch" />
         <l-date-picker v-model="dateRange" @change="onSearch"></l-date-picker>
       </div>
-      <el-button size="small" type="primary" plain @click="invitation">邀请用户</el-button>
+      <!--<el-button size="small" type="primary" plain @click="invitation">邀请区域经理</el-button>-->
     </div>
     <el-table
       v-loading="listLoading"
@@ -21,11 +21,11 @@
       fit
       highlight-current-row
     >
-      <el-table-column label="选择" align="center" width="80">
-        <template slot-scope="scope">
-          <el-radio v-model="radioValue" :label="scope.row.userId" :disabled="scope.row.status !== 1"></el-radio>
-        </template>
-      </el-table-column>
+      <!--<el-table-column label="选择" align="center" width="80">-->
+        <!--<template slot-scope="scope">-->
+          <!--<el-radio v-model="radioValue" :label="scope.row.userId" :disabled="scope.row.status !== 1"></el-radio>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
       <el-table-column label="申请人" align="center">
         <template slot-scope="scope">
           <span v-null="scope.row.name">{{ scope.row.name }}</span>
@@ -56,7 +56,7 @@
           <span v-null="scope.row.statusLabel">{{ scope.row.statusLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" align="center">
+      <el-table-column label="创建时间" align="center" width="105">
         <template slot-scope="scope">
           <span v-null="scope.row.createTime">{{ scope.row.createTime }}</span>
         </template>
@@ -73,9 +73,8 @@
 </template>
 
 <script>
-import { getApprovalList, doApproval, getQRCode } from '@/api/approvalManagement'
+import { getApprovalList, doApproval } from '@/api/approvalManagement'
 import Moment from 'moment'
-import QRCode from 'qrcode'
 
 const DEFAULT_DATE = [Moment().subtract(1, 'weeks').format('YYYY-MM-DD'), Moment().format('YYYY-MM-DD')]
 
@@ -94,7 +93,7 @@ export default {
         beginTime: DEFAULT_DATE[0],
         endTime: DEFAULT_DATE[1]
       },
-      radioValue: '',
+      // radioValue: '',
       QRCodeUrlVisible: false
     }
   },
@@ -118,35 +117,6 @@ export default {
         beginTime: this.formatDate(this.dateRange[0]),
         endTime: this.formatDate(this.dateRange[1])
       })
-    },
-    async invitation() {
-      try {
-        const row = this.list.filter(one => this.radioValue === one.userId)[0] || {}
-        const params = {
-          type: row.type || '',
-          userId: this.radioValue || 0
-        }
-        console.log(params)
-        const res = await getQRCode(params)
-        this.QRCodeUrlVisible = true
-        this.$nextTick(() => {
-          const dom = document.getElementById('canvas')
-          const options = {
-            width: 256,
-            height: 256
-          }
-          QRCode.toCanvas(dom, res.data.url, options, (error) => {
-            if (error) {
-              this.showMessage('error', '二维码生成失败！')
-              this.QRCodeUrlVisible = false
-              return
-            }
-            console.log('success!')
-          })
-        })
-      } catch (e) {
-        console.log(e)
-      }
     },
     showMessage(type, message) {
       this.$message({

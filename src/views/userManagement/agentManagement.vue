@@ -1,13 +1,17 @@
 <template>
   <div class="agent-management-container">
+    <!--<el-button size="small" type="primary" plain @click="invitation(scope.row)">邀请区域经理</el-button>-->
     <div class="searching-box">
       <el-tabs v-model="activeName" @tab-click="onSearch">
-        <el-tab-pane label="区域经理" name="3"></el-tab-pane>
-        <el-tab-pane label="高级合伙人" name="1"></el-tab-pane>
-        <el-tab-pane label="合伙人" name="2"></el-tab-pane>
+        <el-tab-pane label="区域经理" name="1"></el-tab-pane>
+        <el-tab-pane label="高级合伙人" name="2"></el-tab-pane>
+        <el-tab-pane label="合伙人" name="3"></el-tab-pane>
         <el-tab-pane label="机构" name="4"></el-tab-pane>
       </el-tabs>
-      <l-input-search v-model="searchText" @confirm="onSearch" />
+      <div class="pull-right">
+        <el-button size="small" type="primary" plain @click="showInvitationQRCode(1)">邀请区域经理</el-button>
+        <l-input-search v-model="searchText" @confirm="onSearch" />
+      </div>
     </div>
     <div class="table-box">
       <el-table
@@ -50,7 +54,7 @@
         </el-table-column>
         <el-table-column align="center" label="代理身份">
           <template slot-scope="scope">
-            <span v-null="scope.row.type">{{ scope.row.type | agentType }}</span>
+            <span v-null="scope.row.typeLabel">{{ scope.row.typeLabel }}</span>
           </template>
         </el-table-column>
         <el-table-column align="center" label="上级名称">
@@ -63,7 +67,7 @@
             <span v-null="scope.row.statusLabel">{{ scope.row.statusLabel }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="createdAt" label="用户创建时间">
+        <el-table-column align="center" prop="createdAt" label="用户创建时间" width="105">
           <template slot-scope="scope">
             <span v-null="scope.row.createdAt">{{ scope.row.createdAt }}</span>
           </template>
@@ -73,15 +77,41 @@
             <el-button size="mini" type="primary" plain @click="openDetails(scope.row)">详情</el-button>
             <el-button size="mini" type="danger" plain @click="openLeave(scope.row)">离职</el-button>
             <el-button size="mini" type="success" plain @click="clickPromotion(scope.row)">晋升</el-button>
+            <el-button size="mini" type="primary" plain @click="invitation(scope.row)">生成邀请</el-button>
           </template>
         </el-table-column>
       </el-table>
       <l-pagination :api="api" :params="params" @list="getListData"></l-pagination>
     </div>
     <el-dialog
+      title="选择被邀请人身份"
+      :visible.sync="invitationDialogVisible"
+      width="310px"
+      center>
+      <span>代理身份</span>
+      <el-select v-model="invitationSelected" placeholder="请选择">
+        <el-option
+          v-for="item in invitationOptions[activeName]"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="invitationDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="showInvitationQRCode">确 定</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog
+      title="微信扫描二维码"
+      :visible.sync="QRCodeUrlVisible"
+      width="300px">
+      <canvas id="canvas"></canvas>
+    </el-dialog>
+    <el-dialog
       title="晋升"
       :visible.sync="dialogVisible"
-      width="30%"
+      width="310px"
       center>
       <span>代理身份</span>
       <el-select v-model="agentSelected" placeholder="请选择">
@@ -102,7 +132,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getAgents, agentPromotion } from '@/api/userManagement'
+import { getAgents, agentPromotion, getQRCode } from '@/api/userManagement'
+import { AGENT_INVITATION } from '@/utils/constants'
+import QRCode from 'qrcode'
 
 export default {
   name: 'AgentManagement',
@@ -123,12 +155,16 @@ export default {
       params: {
         page: 1,
         pageSize: 10,
-        type: 3
+        type: 1
       },
       searchText: '',
+      invitationDialogVisible: false,
+      QRCodeUrlVisible: false,
       dialogVisible: false,
+      invitationSelected: 0,
       agentSelected: 3,
       currentRow: {},
+      invitationOptions: AGENT_INVITATION,
       agentOptions: [{
         label: '区域经理',
         value: 3
@@ -143,13 +179,19 @@ export default {
         value: 4
       }],
       listLoading: true,
-      activeName: '3'
+      activeName: '1'
     }
   },
   computed: {
     ...mapGetters([
       'name'
     ])
+  },
+  watch: {
+    activeName(val) {
+      // 切换tab重置选择
+      this.invitationSelected = 0
+    }
   },
   created() {
   },
@@ -190,6 +232,45 @@ export default {
         this.$message.error(`操作失败：${e}`)
       }
     },
+    invitation(row) {
+      this.currentRow = row
+      this.invitationSelected = 0 // 重置选择
+      this.invitationDialogVisible = true
+    },
+    async showInvitationQRCode(type) {
+      this.invitationDialogVisible = false
+      try {
+        const params = {
+          type: this.invitationSelected,
+          userId: this.currentRow.userId
+        }
+        // 邀请区域经理
+        if (type === 1) {
+          params.type = 1
+          params.userId = 0
+        }
+        console.log(params)
+        const res = await getQRCode(params)
+        this.QRCodeUrlVisible = true
+        this.$nextTick(() => {
+          const dom = document.getElementById('canvas')
+          const options = {
+            width: 256,
+            height: 256
+          }
+          QRCode.toCanvas(dom, res.data.url, options, (error) => {
+            if (error) {
+              this.showMessage('error', '二维码生成失败！')
+              this.QRCodeUrlVisible = false
+              return
+            }
+            console.log('success!')
+          })
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    },
     openDetails(row) {
       this.$router.push({
         path: '/userManagement/agentDetail',
@@ -214,10 +295,13 @@ export default {
   .agent-management-container {
     .searching-box {
       position: relative;
-      .l-input-search {
+      .pull-right {
         position: absolute;
         bottom: 19px;
         right: 0;
+        .el-button {
+          margin-right: 16px;
+        }
       }
     }
   }

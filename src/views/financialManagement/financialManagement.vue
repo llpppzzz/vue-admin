@@ -27,7 +27,7 @@
       </el-table-column>
       <el-table-column label="代理身份" align="center">
         <template slot-scope="scope">
-          <span v-null="scope.row.type">{{ scope.row.type | agentType }}</span>
+          <span v-null="scope.row.typeLabel">{{ scope.row.typeLabel }}</span>
         </template>
       </el-table-column>
       <el-table-column label="金额" align="center">

@@ -18,12 +18,3 @@ export function doApproval(data) {
     data
   })
 }
-
-// 邀请二维码
-export function getQRCode(data) {
-  return request({
-    url: '/web/invitation/qrcode',
-    method: 'post',
-    data
-  })
-}
