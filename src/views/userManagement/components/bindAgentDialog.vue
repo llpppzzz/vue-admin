@@ -14,9 +14,9 @@
         fit
         highlight-current-row
       >
-        <el-table-column label="操作" align="center">
+        <el-table-column label="操作" align="center" width="60">
           <template slot-scope="scope">
-            <el-radio v-model="radioValue" :label="scope.row.id"></el-radio>
+            <el-radio v-model="radioValue" :label="scope.row.userId"></el-radio>
           </template>
         </el-table-column>
         <el-table-column label="姓名" align="center">
@@ -26,12 +26,12 @@
         </el-table-column>
         <el-table-column label="代理身份" align="center">
           <template slot-scope="scope">
-            <span v-null="scope.row.name">{{ scope.row.name }}</span>
+            <span v-null="scope.row.typeLabel">{{ scope.row.typeLabel }}</span>
           </template>
         </el-table-column>
         <el-table-column label="上级名称" align="center">
           <template slot-scope="scope">
-            <span v-null="scope.row.name">{{ scope.row.name }}</span>
+            <span v-null="scope.row.inviterUserName">{{ scope.row.inviterUserName }}</span>
           </template>
         </el-table-column>
         <el-table-column label="创建时间" align="center">
@@ -112,11 +112,14 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .agent-leave-dialog {
   .l-input-search {
     width: 100%;
     margin-bottom: 24px;
+  }
+  .el-radio__label {
+    display: none;
   }
 }
 </style>
