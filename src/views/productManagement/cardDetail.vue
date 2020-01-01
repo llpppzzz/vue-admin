@@ -58,13 +58,13 @@
         </el-row>
         <el-row>
           <el-col :span="6"><div class="grid-content">
-            <span class="sub-title">一级代理分佣</span>
+            <span class="sub-title">高级合伙人分佣</span>
             <el-input v-model="commission" size="small" type="number">
               <span class="suffix-text" slot="suffix">%</span>
             </el-input>
           </div></el-col>
           <el-col :span="6"><div class="grid-content">
-            <span class="sub-title">二级代理分佣</span>
+            <span class="sub-title">合伙人分佣</span>
             <el-input v-model="commission" size="small" type="number">
               <span class="suffix-text" slot="suffix">%</span>
             </el-input>
@@ -94,13 +94,13 @@
         </el-row>
         <el-row>
           <el-col :span="8"><div class="grid-content">
-            <span class="sub-title">一级代理积分</span>
+            <span class="sub-title">高级合伙人积分</span>
             <el-input v-model="commission" size="small" type="number">
               <span class="suffix-text" slot="suffix">分</span>
             </el-input>
           </div></el-col>
           <el-col :span="8"><div class="grid-content">
-            <span class="sub-title">二级代理积分</span>
+            <span class="sub-title">合伙人积分</span>
             <el-input v-model="commission" size="small" type="number">
               <span class="suffix-text" slot="suffix">分</span>
             </el-input>

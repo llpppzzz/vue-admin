@@ -2,9 +2,9 @@
   <div class="agent-management-container">
     <div class="searching-box">
       <el-tabs v-model="activeName" @tab-click="onSearch">
-        <el-tab-pane label="区域代理" name="3"></el-tab-pane>
-        <el-tab-pane label="一级代理" name="1"></el-tab-pane>
-        <el-tab-pane label="二级代理" name="2"></el-tab-pane>
+        <el-tab-pane label="区域经理" name="3"></el-tab-pane>
+        <el-tab-pane label="高级合伙人" name="1"></el-tab-pane>
+        <el-tab-pane label="合伙人" name="2"></el-tab-pane>
         <el-tab-pane label="机构" name="4"></el-tab-pane>
       </el-tabs>
       <l-input-search v-model="searchText" @confirm="onSearch" />
@@ -130,13 +130,13 @@ export default {
       agentSelected: 3,
       currentRow: {},
       agentOptions: [{
-        label: '区域代理',
+        label: '区域经理',
         value: 3
       }, {
-        label: '一级代理',
+        label: '高级合伙人',
         value: 1
       }, {
-        label: '二级代理',
+        label: '合伙人',
         value: 2
       }, {
         label: '机构',
