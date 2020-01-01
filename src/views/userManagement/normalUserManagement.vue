@@ -112,9 +112,6 @@ export default {
   .user-management-container {
     .searching-box {
       padding: 0 0 16px 0;
-      .el-input {
-        width: 200px;
-      }
     }
   }
 </style>

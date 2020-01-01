@@ -7,7 +7,10 @@
       <canvas id="canvas"></canvas>
     </el-dialog>
     <div class="searching-box">
-      <l-date-picker v-model="dateRange" @change="onSearch"></l-date-picker>
+      <div class="pull-left">
+        <l-input-search v-model="searchText" @confirm="onSearch" />
+        <l-date-picker v-model="dateRange" @change="onSearch"></l-date-picker>
+      </div>
       <el-button size="small" type="primary" plain @click="invitation">邀请用户</el-button>
     </div>
     <el-table
@@ -80,6 +83,7 @@ export default {
   name: 'ApprovalManagement',
   data() {
     return {
+      searchText: '',
       dateRange: DEFAULT_DATE,
       listLoading: true,
       list: [],
@@ -110,6 +114,7 @@ export default {
     onSearch() {
       this.listLoading = true
       this.params = Object.assign({}, this.params, {
+        name: this.searchText,
         beginTime: this.formatDate(this.dateRange[0]),
         endTime: this.formatDate(this.dateRange[1])
       })
@@ -191,8 +196,8 @@ export default {
       padding: 0 0 16px 0;
       display: flex;
       justify-content: space-between;
-      .el-input {
-        width: 200px;
+      .l-input-search {
+        margin-right: 24px;
       }
     }
     .el-table .el-radio__label {

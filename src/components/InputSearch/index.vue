@@ -44,6 +44,7 @@ export default {
 <style lang="scss">
   .l-input-search {
     display: inline-block;
+    width: 160px;
     .el-icon-search {
       cursor: pointer;
       margin-right: -5px;

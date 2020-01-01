@@ -97,9 +97,6 @@ export default {
       padding: 0 0 16px 0;
       display: flex;
       justify-content: space-between;
-      .el-input {
-        width: 200px;
-      }
     }
   }
 </style>

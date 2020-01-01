@@ -1,6 +1,10 @@
 <template>
   <div class="view-financial-management">
     <div class="searching-box">
+      <div class="pull-left">
+        <l-input-search v-model="searchText" @confirm="onSearch" />
+        <l-date-picker v-model="dateRange" @change="onSearch"></l-date-picker>
+      </div>
       <el-button size="small" type="primary" plain @click="exportList">一键导出</el-button>
     </div>
     <el-table
@@ -47,23 +51,32 @@
 </template>
 
 <script>
-import { getFinancialList } from '@/api/financialManagement'
+import Moment from 'moment'
+import { getFinancialList, exportFinancialList } from '@/api/financialManagement'
+
+const DEFAULT_DATE = [Moment().subtract(1, 'weeks').format('YYYY-MM-DD'), Moment().format('YYYY-MM-DD')]
 
 export default {
   name: 'FinancialManagement',
   data() {
     return {
-      dateRange: [],
+      searchText: '',
+      dateRange: DEFAULT_DATE,
       listLoading: true,
       list: [],
       api: getFinancialList,
       params: {
         page: 1,
-        pageSize: 10
+        pageSize: 10,
+        beginTime: DEFAULT_DATE[0],
+        endTime: DEFAULT_DATE[1]
       }
     }
   },
   methods: {
+    formatDate(val) {
+      return Moment(val).format('YYYY-MM-DD')
+    },
     getListData(data) {
       console.log(data)
       if (!data.list.length) {
@@ -77,12 +90,26 @@ export default {
     onSearch() {
       this.listLoading = true
       this.params = Object.assign({}, this.params, {
-        beginTime: '',
-        endTime: ''
+        name: this.searchText,
+        beginTime: this.formatDate(this.dateRange[0]),
+        endTime: this.formatDate(this.dateRange[1])
       })
     },
     invitation() {},
-    exportList(row) {
+    async exportList(row) {
+      const params = {
+        beginTime: Moment().subtract(1, 'years').format('YYYY-MM-DD'),
+        endTime: Moment().format('YYYY-MM-DD')
+      }
+      location.href = `/web/user/wallets/export?beginTime=${params.beginTime}&endTime=${params.endTime}`
+      // try {
+      //   const params = {
+      //     beginTime: Moment().subtract(1, 'years').format('YYYY-MM-DD'),
+      //     endTime: Moment().format('YYYY-MM-DD')
+      //   }
+      //   const res = await exportFinancialList(params)
+      // } catch (e) {
+      // }
     }
   }
 }
@@ -95,8 +122,8 @@ export default {
       padding: 0 0 16px 0;
       display: flex;
       justify-content: space-between;
-      .el-input {
-        width: 200px;
+      .l-input-search {
+        margin-right: 24px;
       }
     }
   }

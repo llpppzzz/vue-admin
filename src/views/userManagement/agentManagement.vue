@@ -219,9 +219,6 @@ export default {
         bottom: 19px;
         right: 0;
       }
-      .el-input {
-        width: 200px;
-      }
     }
   }
 </style>

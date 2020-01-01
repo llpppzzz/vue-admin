@@ -9,3 +9,12 @@ export function getFinancialList(data) {
     params: data
   })
 }
+
+// 导出
+export function exportFinancialList(data) {
+  return request({
+    url: '/web/user/wallets/export',
+    method: 'get',
+    params: data
+  })
+}
