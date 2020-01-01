@@ -76,7 +76,7 @@
           <template slot-scope="scope">
             <el-button size="mini" type="primary" plain @click="openDetails(scope.row)">详情</el-button>
             <el-button size="mini" type="danger" plain @click="openLeave(scope.row)">离职</el-button>
-            <el-button size="mini" type="success" plain @click="clickPromotion(scope.row)">晋升</el-button>
+            <el-button v-show="activeName !== '1'" size="mini" type="success" plain @click="clickPromotion(scope.row)">晋升</el-button>
             <el-button size="mini" type="primary" plain @click="invitation(scope.row)">生成邀请</el-button>
           </template>
         </el-table-column>
@@ -116,7 +116,7 @@
       <span>代理身份</span>
       <el-select v-model="agentSelected" placeholder="请选择">
         <el-option
-          v-for="item in agentOptions"
+          v-for="item in agentOptions[activeName]"
           :key="item.value"
           :label="item.label"
           :value="item.value">
@@ -133,7 +133,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getAgents, agentPromotion, getQRCode } from '@/api/userManagement'
-import { AGENT_INVITATION } from '@/utils/constants'
+import { AGENT_INVITATION, AGENT_PROMOTION } from '@/utils/constants'
 import QRCode from 'qrcode'
 
 export default {
@@ -162,22 +162,10 @@ export default {
       QRCodeUrlVisible: false,
       dialogVisible: false,
       invitationSelected: 0,
-      agentSelected: 3,
+      agentSelected: 1,
       currentRow: {},
       invitationOptions: AGENT_INVITATION,
-      agentOptions: [{
-        label: '区域经理',
-        value: 3
-      }, {
-        label: '高级合伙人',
-        value: 1
-      }, {
-        label: '合伙人',
-        value: 2
-      }, {
-        label: '机构',
-        value: 4
-      }],
+      agentOptions: AGENT_PROMOTION,
       listLoading: true,
       activeName: '1'
     }
@@ -191,6 +179,7 @@ export default {
     activeName(val) {
       // 切换tab重置选择
       this.invitationSelected = 0
+      this.agentSelected = 1
     }
   },
   created() {

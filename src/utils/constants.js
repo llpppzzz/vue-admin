@@ -37,3 +37,23 @@ export const AGENT_INVITATION = {
     label: '普通用户'
   }]
 }
+export const AGENT_PROMOTION = {
+  2: [{
+    value: 1,
+    label: '区域经理'
+  }],
+  3: [{
+    value: 1,
+    label: '区域经理'
+  }, {
+    value: 2,
+    label: '高级合伙人'
+  }],
+  4: [{
+    value: 1,
+    label: '区域经理'
+  }, {
+    value: 2,
+    label: '高级合伙人'
+  }]
+}
