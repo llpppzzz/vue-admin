@@ -157,7 +157,7 @@ export default {
       api: getAgents,
       params: {
         page: 1,
-        pageSize: 10,
+        pageSize: 20,
         type: 1
       },
       searchText: '',
@@ -298,7 +298,7 @@ export default {
     }
     .button-box {
       display: flex;
-      justify-content: center;
+      justify-content: space-around;
     }
     .tips {
       text-align: center;

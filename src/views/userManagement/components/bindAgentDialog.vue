@@ -43,9 +43,9 @@
       <l-pagination :api="api" :params="params" @list="getListData"></l-pagination>
     </div>
     <span slot="footer" class="dialog-footer">
-    <el-button plain @click="isShow = false">取 消</el-button>
-    <el-button type="primary" plain @click="isShow = false">确 定</el-button>
-  </span>
+      <el-button plain @click="isShow = false">取 消</el-button>
+      <el-button type="primary" plain @click="isShow = false">确 定</el-button>
+    </span>
   </el-dialog>
 </template>
 

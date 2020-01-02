@@ -67,7 +67,7 @@ export default {
       api: getUsers,
       params: {
         page: 1,
-        pageSize: 10
+        pageSize: 20
       },
       listLoading: true,
       searchText: ''

@@ -67,7 +67,7 @@ export default {
       api: getFinancialList,
       params: {
         page: 1,
-        pageSize: 10,
+        pageSize: 20,
         beginTime: DEFAULT_DATE[0],
         endTime: DEFAULT_DATE[1]
       }
