@@ -53,7 +53,9 @@
       </el-table-column>
       <el-table-column label="审核状态" align="center">
         <template slot-scope="scope">
-          <span v-null="scope.row.statusLabel">{{ scope.row.statusLabel }}</span>
+          <span class="success" v-if="scope.row.statusLabel === '已通过'" v-null="scope.row.statusLabel">{{ scope.row.statusLabel }}</span>
+          <span class="error" v-else-if="scope.row.statusLabel === '已拒绝'" v-null="scope.row.statusLabel">{{ scope.row.statusLabel }}</span>
+          <span v-else v-null="scope.row.statusLabel">{{ scope.row.statusLabel }}</span>
         </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" width="105">
@@ -169,6 +171,12 @@ export default {
       .l-input-search {
         margin-right: 24px;
       }
+    }
+    .success {
+      color: #67C23A;
+    }
+    .error {
+      color: #F56C6C;
     }
     .el-table .el-radio__label {
       display: none;

@@ -72,12 +72,14 @@
             <span v-null="scope.row.createdAt">{{ scope.row.createdAt }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="操作" width="230">
+        <el-table-column align="center" label="操作" width="300">
           <template slot-scope="scope">
-            <el-button size="mini" type="primary" plain @click="openDetails(scope.row)">详情</el-button>
-            <el-button size="mini" type="danger" plain @click="openLeave(scope.row)">离职</el-button>
-            <el-button v-show="activeName !== '1'" size="mini" type="success" plain @click="clickPromotion(scope.row)">晋升</el-button>
-            <el-button size="mini" type="primary" plain @click="invitation(scope.row)">生成邀请</el-button>
+            <div class="button-box">
+              <el-button size="mini" type="primary" plain @click="openDetails(scope.row)">详情</el-button>
+              <el-button size="mini" type="danger" plain @click="openLeave(scope.row)">离职</el-button>
+              <el-button v-show="activeName !== '1'" size="mini" type="success" plain @click="clickPromotion(scope.row)">晋升</el-button>
+              <el-button size="mini" type="primary" plain @click="invitation(scope.row)">生成邀请</el-button>
+            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -103,9 +105,10 @@
       </span>
     </el-dialog>
     <el-dialog
-      title="微信扫描二维码"
+      title="微信二维码"
       :visible.sync="QRCodeUrlVisible"
       width="300px">
+      <div class="tips">请管理员截图后发给需要绑定的用户</div>
       <canvas id="canvas"></canvas>
     </el-dialog>
     <el-dialog
@@ -292,6 +295,15 @@ export default {
           margin-right: 16px;
         }
       }
+    }
+    .button-box {
+      display: flex;
+      justify-content: center;
+    }
+    .tips {
+      text-align: center;
+      color: #999;
+      font-size: 12px;
     }
   }
 </style>
